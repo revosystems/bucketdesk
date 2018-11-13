@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('issues', 'IssuesController@store')->name('issues.store');

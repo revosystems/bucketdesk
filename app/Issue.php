@@ -25,6 +25,25 @@ class Issue extends Model
 
     protected $guarded = [];
 
+    public static function fromBitbucketIssue($repository, $issue)
+    {
+        return Issue::updateOrCreate([
+            'repository_id' => $repository->id,
+            'issue_id' => $issue->local_id,
+        ], [
+            'username' => $issue->responsible->username ?? null,
+            'title'    => str_limit($issue->title, 255),
+            'status'   => Issue::parseStatus($issue->status),
+            'priority' => Issue::parsePriority($issue->priority),
+            'type'     => Issue::parseType($issue->metadata->kind),
+        ]);
+    }
+
+    public function repository()
+    {
+        return $this->belongsTo(Repository::class);
+    }
+
     public static function parseStatus($statusName)
     {
         return [

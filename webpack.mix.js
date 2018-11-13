@@ -11,5 +11,8 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/sass/app.scss', 'public/css');
+mix.babel([
+    'vendor/badchoice/thrust/src/resources/js/thrust.min.js',
+    ],
+    'public/js/app.js')
+   .less('resources/less/app.less', 'public/css');

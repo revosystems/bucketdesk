@@ -16,8 +16,9 @@ class InitializeRepo implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $account;
-    private $repo;
+    public $account;
+    public $repo;
+    private $repository;
 
     public function __construct($account, $repo)
     {
@@ -40,17 +41,7 @@ class InitializeRepo implements ShouldQueue
             'limit'  => $limit,
         ]);
         foreach ($issues->issues as $id => $issue) {
-            Issue::updateOrCreate([
-                'account'  => $this->account,
-                'repo'     => $this->repo,
-                'issue_id' => $issue->local_id,
-                ], [
-                'username' => $issue->responsible->username ?? null,
-                'title'    => str_limit($issue->title, 255),
-                'status'   => Issue::parseStatus($issue->status),
-                'priority' => Issue::parsePriority($issue->priority),
-                'type'     => Issue::parseType($issue->metadata->kind),
-            ]);
+            Issue::fromBitbucketIssue($this->repository, $issue);
         }
         return $issues;
     }
@@ -82,7 +73,8 @@ class InitializeRepo implements ShouldQueue
 
     public function createRepository(): void
     {
-        Repository::firstOrCreate([
+        $this->repository = Repository::firstOrCreate([
+            'name'    => $this->repo,
             'account' => $this->account,
             'repo'    => $this->repo,
         ]);

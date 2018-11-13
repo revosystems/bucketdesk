@@ -2,6 +2,7 @@
 
 namespace App\IssueTrackers\Bitbucket;
 
+// https://gentlero.bitbucket.io/bitbucket-api/1.0/examples/repositories/issues.html
 class Bitbucket
 {
     protected $auth;
@@ -27,6 +28,20 @@ class Bitbucket
         $issue->setCredentials($this->auth);
         return $this->parseResponse(
             $issue->get($account, $repoSlug, $id)
+        );
+    }
+
+    public function createIssue($account, $repoSlug, $title, $content = '')
+    {
+        $issue = new \Bitbucket\API\Repositories\Issues();
+        $issue->setCredentials($this->auth);
+        return $this->parseResponse(
+            $issue->create($account, $repoSlug, [
+                'title'     => $title,
+                'content'   => $content,
+                'kind'      => 'task',
+                'priority'  => 'major'
+            ])
         );
     }
 

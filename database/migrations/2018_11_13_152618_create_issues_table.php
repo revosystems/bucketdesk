@@ -11,8 +11,9 @@ class CreateIssuesTable extends Migration
         Schema::create('issues', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('issue_id')->unsigned();
-            $table->text('account');
-            $table->text('repo');
+
+            $table->integer('repository_id')->unsigned();
+            $table->foreign('repository_id')->references('id')->on('repositories');
 
             $table->string('title');
             $table->tinyInteger('priority');
