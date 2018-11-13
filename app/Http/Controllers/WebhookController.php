@@ -9,19 +9,18 @@ class WebhookController extends Controller
 {
     public function handle()
     {
-        if (request()->has('changes')) {
-            $this->updateIssueFromBitbucket();
-        } else {
-            $this->createIssueFromBitbucket();
-        }
+        Issue::fromBitbucketIssue($this->findRepository(), (object)request('issue'));
 
         return response()->json(['ok' => true]);
     }
 
     public function updateIssueFromBitbucket(): void
     {
-        $issue = Issue::where('issue_id', request('issue')['id']);
-        $issue->update([
+        $repository = $this->findRepository();
+        Issue::where([
+            'issue_id'      => request('issue')['id'],
+            'repository_id' => $repository->id
+        ])->first()->update([
             'title'    => request('issue')['title'],
             'type'     => Issue::parseType(request('issue')['kind']),
             'priority' => Issue::parsePriority(request('issue')['priority']),
@@ -30,11 +29,10 @@ class WebhookController extends Controller
         ]);
     }
 
-    private function createIssueFromBitbucket()
+    private function findRepository()
     {
-        $account = request('repository')['owner']['username'];
-        $repo    = request('repository')['name'];
-        $repository = Repository::where(['account' => $account, 'repo' => $repo])->first();
-        Issue::fromBitbucketIssue($repository, (object)request('issue'));
+        $account    = request('repository')['owner']['username'];
+        $repo       = request('repository')['name'];
+        return Repository::where(['account' => $account, 'repo' => $repo])->first();
     }
 }
