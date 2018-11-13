@@ -1,0 +1,73 @@
+<?php
+
+namespace App\IssueTrackers\Bitbucket;
+
+class Bitbucket
+{
+    protected $auth;
+
+    public function __construct()
+    {
+        $this->auth = new \Bitbucket\API\Authentication\Basic(config('services.bitbucket.user'), config('services.bitbucket.password'));
+    }
+
+    public function getIssues($account, $repoSlug, $options = [])
+    {
+        $issue = new \Bitbucket\API\Repositories\Issues();
+        $issue->setCredentials($this->auth);
+
+        return $this->parseResponse(
+            $issue->all($account, $repoSlug, $options)
+        );
+    }
+
+    public function getIssue($account, $repoSlug, $id)
+    {
+        $issue = new \Bitbucket\API\Repositories\Issues();
+        $issue->setCredentials($this->auth);
+        return $this->parseResponse(
+            $issue->get($account, $repoSlug, $id)
+        );
+    }
+
+    public function parseResponse($response)
+    {
+        return json_decode($response->getContent());
+    }
+
+    public function getWebhooks($account, $repoSlug)
+    {
+        $hooks  = new \Bitbucket\API\Repositories\Hooks();
+        $hooks->setCredentials($this->auth);
+
+        return $this->parseResponse(
+            $hooks->all($account, $repoSlug)
+        );
+    }
+
+    public function createHook($account, $repoSlug)
+    {
+        $hook  = new \Bitbucket\API\Repositories\Hooks();
+        $hook->setCredentials($this->auth);
+
+        /*$hook->create($account, $repoSlug, array(
+            'description' => 'Bucketdesk',
+            'url' => 'http://postb.in/sD8y5ynD',
+            'active' => true,
+            'events' => array(
+                'issue:created',
+                'issue:updated'
+            )
+        ));*/
+    }
+
+    public function getGroups($account)
+    {
+        $groups = new \Bitbucket\API\Groups();
+        $groups->setCredentials($this->auth);
+
+        return $this->parseResponse(
+            $groups->get($account)
+        );
+    }
+}

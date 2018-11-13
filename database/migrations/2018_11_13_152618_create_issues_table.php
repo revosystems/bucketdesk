@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateIssuesTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('issues', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('issue_id')->unsigned();
+            $table->text('account');
+            $table->text('repo');
+
+            $table->string('title');
+            $table->tinyInteger('priority');
+            $table->tinyInteger('type');
+            $table->tinyInteger('status');
+
+            $table->text('username')->nullable();
+            $table->date('date')->nullable();
+
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('issues');
+    }
+}
