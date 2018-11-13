@@ -9,8 +9,9 @@ class Issue extends Model
     const STATUS_NEW     = 1;
     const STATUS_OPEN    = 2;
     const STATUS_HOLD    = 3;
-    const STATUS_CLOSED  = 4;
-    const STATUS_INVALID = 5;
+    const STATUS_RESOLVED= 4;
+    const STATUS_CLOSED  = 5;
+    const STATUS_INVALID = 6;
 
     const PRIORITY_TRIVIAL  = 1;
     const PRIORITY_MINOR    = 2;
@@ -29,13 +30,13 @@ class Issue extends Model
     {
         return Issue::updateOrCreate([
             'repository_id' => $repository->id,
-            'issue_id' => $issue->local_id,
+            'issue_id' => $issue->local_id ?? $issue->id,
         ], [
-            'username' => $issue->responsible->username ?? null,
+            'username' => $issue->responsible->username ?? ($issue->assignee->username ?? null),
             'title'    => str_limit($issue->title, 255),
-            'status'   => Issue::parseStatus($issue->status),
+            'status'   => Issue::parseStatus($issue->status ?? $issue->state),
             'priority' => Issue::parsePriority($issue->priority),
-            'type'     => Issue::parseType($issue->metadata->kind),
+            'type'     => Issue::parseType($issue->metadata->kind ?? $issue->kind),
         ]);
     }
 
@@ -50,6 +51,7 @@ class Issue extends Model
             'new'     => static::STATUS_NEW     ,
             'open'    => static::STATUS_OPEN    ,
             'hold'    => static::STATUS_HOLD    ,
+            'resolved'=> static::STATUS_RESOLVED    ,
             'closed'  => static::STATUS_CLOSED  ,
             'invalid' => static::STATUS_INVALID ,
         ][$statusName];

@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 Route::post('issues', 'IssuesController@store')->name('issues.store');
+
+Route::post('webhook', 'WebhookController@handle');
