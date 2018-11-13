@@ -26,6 +26,8 @@ class Issue extends Model
 
     protected $guarded = [];
 
+    use Taggable;
+
     public static function fromBitbucketIssue($repository, $issue)
     {
         return Issue::updateOrCreate([
@@ -43,6 +45,11 @@ class Issue extends Model
     public function repository()
     {
         return $this->belongsTo(Repository::class);
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 
     public static function parseStatus($statusName)

@@ -22,3 +22,24 @@ $factory->define(App\User::class, function (Faker $faker) {
         'remember_token'    => str_random(10),
     ];
 });
+
+$factory->define(App\Repository::class, function (Faker $faker) {
+    return [
+        'name'    => $faker->word,
+        'account' => $faker->word,
+        'repo'    => $faker->word,
+    ];
+});
+
+$factory->define(App\Issue::class, function (Faker $faker) {
+    return [
+        'repository_id' => function () {
+            return factory(App\Repository::class)->create()->id;
+        },
+        'title'    => $faker->sentence,
+        'issue_id' => $faker->numberBetween(1, 1000),
+        'priority' => 1,
+        'status'   => 1,
+        'type'     => 1,
+    ];
+});
