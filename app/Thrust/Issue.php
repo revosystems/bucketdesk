@@ -6,6 +6,7 @@ use App\ThrustHelpers\Actions\QuickCreateIssue;
 use App\ThrustHelpers\Filters\PriorityFilter;
 use App\ThrustHelpers\Filters\StatusFilter;
 use App\ThrustHelpers\Filters\TypeFilter;
+use BadChoice\Thrust\Actions\Export;
 use BadChoice\Thrust\Fields\BelongsTo;
 use BadChoice\Thrust\Fields\BelongsToMany;
 use BadChoice\Thrust\Fields\Date;
@@ -15,8 +16,8 @@ use BadChoice\Thrust\Resource;
 
 class Issue extends Resource
 {
-    public static $model = \App\Issue::class;
-    public static $search = ['title', 'repo', 'account', 'username'];
+    public static $model  = \App\Issue::class;
+    public static $search = ['title', 'tags.name', 'repository.name', 'username'];
 
     public function fields()
     {
@@ -37,7 +38,7 @@ class Issue extends Resource
     public function mainActions()
     {
         return [
-            QuickCreateIssue::make('createIssue')
+            QuickCreateIssue::make('createIssue'),
         ];
     }
 
@@ -54,6 +55,4 @@ class Issue extends Resource
             new StatusFilter,
         ];
     }
-
-
 }

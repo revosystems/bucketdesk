@@ -40,6 +40,10 @@ return [
         ],
     ],
     'bitbucket' => [
+        'oauth' => [
+            'key' => 'GRCD6f4SVTwSzMFxrS',
+            'secret' => 'V5GC7hmhqzGE2BgtXKp8qZUzHAmFDDMu',
+        ],
         'user' => env('BITBUCKET_USER'),
         'password' => env('BITBUCKET_PASSWORD'),
         'developersGroup' => 'Developers',
