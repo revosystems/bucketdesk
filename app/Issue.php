@@ -72,6 +72,10 @@ class Issue extends Model
         $this->update(['status' => static::STATUS_RESOLVED]);
     }
 
+    public function comment($comment){
+        return (new Bitbucket)->createComment($this->repository->account, $this->repository->repo, $this->issue_id, $comment);
+    }
+
     public function updateBitbucketWith($array)
     {
         return (new Bitbucket)->updateIssue($this->repository->account, $this->repository->repo, $this->issue_id, $array);

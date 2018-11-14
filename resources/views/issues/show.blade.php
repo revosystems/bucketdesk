@@ -19,13 +19,13 @@
     </div>
 @endforeach
 <div class="mb3 bt pt3 pb3 bb">
-    <form>
+    <form action="{{route('comments.store', $issue)}}" method="POST">
+        {{ csrf_field() }}
         <textarea name="comment" class="w100" rows="8"></textarea>
         <br>
         <button class="secondary">Comment</button>
     </form>
 </div>
-
 <div>
 @if ($issue->status < \App\Issue::STATUS_RESOLVED)
     <a href="{{route('issues.resolve', $issue)}}" class="button">RESOLVE</a>

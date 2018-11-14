@@ -63,6 +63,15 @@ class Bitbucket
         );
     }
 
+    public function createComment($account, $repoSlug, $id, $comment)
+    {
+        $issue = new \Bitbucket\API\Repositories\Issues();
+        $issue->setCredentials($this->auth);
+        return $this->parseResponse(
+            $issue->comments()->create($account, $repoSlug, $id, $comment)
+        );
+    }
+
     public function parseResponse($response)
     {
         return json_decode($response->getContent());
