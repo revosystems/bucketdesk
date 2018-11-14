@@ -21,6 +21,20 @@ trait Taggable
         $this->tags()->detach(Tag::whereName(strtolower($tagName))->get());
     }
 
+    public function syncTags($tags)
+    {
+        $this->clearTags()->attachTags($tags);
+    }
+
+    public function clearTags()
+    {
+        $this->tags->each(function($tag){
+            $this->detachTag($tag->name);
+        });
+
+        return $this;
+    }
+
     private function findTagsIds($tagNames)
     {
         return collect(is_array($tagNames) ? $tagNames : explode(',', $tagNames))->map(function ($tagName) {

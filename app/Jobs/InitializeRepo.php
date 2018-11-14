@@ -18,12 +18,14 @@ class InitializeRepo implements ShouldQueue
 
     public $account;
     public $repo;
+    public $setupWebhook;
     private $repository;
 
-    public function __construct($account, $repo)
+    public function __construct($account, $repo, $setupWebhook = true)
     {
-        $this->account = $account;
-        $this->repo    = $repo;
+        $this->account      = $account;
+        $this->repo         = $repo;
+        $this->setupWebhook = $setupWebhook;
     }
 
     public function handle()
@@ -83,6 +85,9 @@ class InitializeRepo implements ShouldQueue
 
     private function setupWebhook()
     {
+        if (! $this->setupWebhook) {
+            return;
+        }
         $this->repository->setupWebhook();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\IssueTrackers\Bitbucket\Bitbucket;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 
@@ -43,6 +44,59 @@ class Issue extends Model
         ]);
     }
 
+    public function updateBitbucketIssue()
+    {
+        $this->updateBitbucketWith([
+            'assigne' => [
+                'username' => $this->username,
+            ],
+            'title'    => $this->title,
+            'status'   => array_flip(static::statuses())[$this->status],
+            'priority' => array_flip(static::priorities())[$this->priority],
+            'type'     => array_flip(static::types())[$this->type],
+        ]);
+    }
+
+    public function update(array $attributes = [], array $options = [])
+    {
+        if (isset($attributes['tags'])) {
+            $this->syncTags($attributes['tags']);
+        }
+        return tap(parent::update(array_except($attributes, 'tags'), $options), function(){
+            $this->updateBitbucketIssue();
+        });
+    }
+
+    public function resolve()
+    {
+        $this->update(['status' => static::STATUS_RESOLVED]);
+    }
+
+    public function comment($comment){
+        return (new Bitbucket)->createComment($this->repository->account, $this->repository->repo, $this->issue_id, $comment);
+    }
+
+    public function updateBitbucketWith($array)
+    {
+        return (new Bitbucket)->updateIssue($this->repository->account, $this->repository->repo, $this->issue_id, $array);
+    }
+
+    public function getRemote()
+    {
+        return (new Bitbucket)->getIssue($this->repository->account, $this->repository->repo, $this->issue_id);
+    }
+
+    public function getComments()
+    {
+        return (new Bitbucket)->getIssueComments($this->repository->account, $this->repository->repo, $this->issue_id);
+    }
+
+    public function remoteLink()
+    {
+        return "https://bitbucket.org/{$this->repository->account}/{$this->repository->repo}/issues/{$this->issue_id}";
+    }
+
+
     public function repository()
     {
         return $this->belongsTo(Repository::class);
@@ -51,6 +105,11 @@ class Issue extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'username', 'username');
     }
 
     public static function statuses()
@@ -99,4 +158,5 @@ class Issue extends Model
     {
         return static::types()[$kind];
     }
+
 }

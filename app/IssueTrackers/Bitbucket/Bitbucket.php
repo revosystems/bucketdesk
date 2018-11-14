@@ -31,6 +31,15 @@ class Bitbucket
         );
     }
 
+    public function updateIssue($account, $repoSlug, $id, $fields)
+    {
+        $issue = new \Bitbucket\API\Repositories\Issues();
+        $issue->setCredentials($this->auth);
+        return $this->parseResponse(
+            $issue->update($account, $repoSlug, $id, $fields)
+        );
+    }
+
     public function createIssue($account, $repoSlug, $title, $content = '')
     {
         $issue = new \Bitbucket\API\Repositories\Issues();
@@ -42,6 +51,24 @@ class Bitbucket
                 'kind'      => 'task',
                 'priority'  => 'major'
             ])
+        );
+    }
+
+    public function getIssueComments($account, $repoSlug, $id)
+    {
+        $issue = new \Bitbucket\API\Repositories\Issues();
+        $issue->setCredentials($this->auth);
+        return $this->parseResponse(
+            $issue->comments()->all($account, $repoSlug, $id)
+        );
+    }
+
+    public function createComment($account, $repoSlug, $id, $comment)
+    {
+        $issue = new \Bitbucket\API\Repositories\Issues();
+        $issue->setCredentials($this->auth);
+        return $this->parseResponse(
+            $issue->comments()->create($account, $repoSlug, $id, $comment)
         );
     }
 

@@ -1087,6 +1087,38 @@ div.tagsinput span.tag {
   font-size: 12px;
   border-radius: 4px;
 }
+.popup {
+  border-radius: 4px;
+  background-color: white;
+  padding: 20px;
+  width: 800px;
+  min-height: 100px;
+  border: none;
+  display: none;
+}
+/*.white_content {
+  .hidden; .p3;
+  position: fixed;
+
+  height:auto;
+  background-color: white;
+  z-index:1002;
+  overflow: auto;
+}*/
+#popup {
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+}
+.popup_visible #popup {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+#popup,
+#popup_wrapper,
+#popup_background {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
 body {
   margin: 0;
   font-family: "Lato", sans-serif;
@@ -1128,4 +1160,21 @@ table th {
 .resourceSearch,
 .pagination {
   margin-left: 24px;
+}
+.edit:after {
+  content: 'edit';
+}
+select {
+  width: 300px;
+}
+.tag {
+  background-color: #E73140;
+  font-weight: 400;
+  border-radius: 4px;
+  padding: 4px;
+  margin-right: 4px;
+  color: white;
+}
+a.button {
+  font-weight: 400;
 }
