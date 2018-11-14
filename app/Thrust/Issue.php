@@ -3,6 +3,9 @@
 namespace App\Thrust;
 
 use App\ThrustHelpers\Actions\QuickCreateIssue;
+use App\ThrustHelpers\Filters\PriorityFilter;
+use App\ThrustHelpers\Filters\StatusFilter;
+use App\ThrustHelpers\Filters\TypeFilter;
 use BadChoice\Thrust\Fields\BelongsTo;
 use BadChoice\Thrust\Fields\BelongsToMany;
 use BadChoice\Thrust\Fields\Date;
@@ -41,6 +44,15 @@ class Issue extends Resource
     public function actions()
     {
         return [];
+    }
+
+    public function filters()
+    {
+        return [
+            new PriorityFilter,
+            new TypeFilter,
+            new StatusFilter,
+        ];
     }
 
 

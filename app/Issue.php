@@ -52,7 +52,7 @@ class Issue extends Model
         return $this->belongsToMany(Tag::class);
     }
 
-    public static function parseStatus($statusName)
+    public static function statuses()
     {
         return [
             'new'     => static::STATUS_NEW     ,
@@ -61,10 +61,14 @@ class Issue extends Model
             'resolved'=> static::STATUS_RESOLVED    ,
             'closed'  => static::STATUS_CLOSED  ,
             'invalid' => static::STATUS_INVALID ,
-        ][$statusName];
+        ];
+    }
+    public static function parseStatus($statusName)
+    {
+        static::statuses()[$statusName];
     }
 
-    public static function parsePriority($priority)
+    public static function priorities()
     {
         return [
             'trivial'  => static::PRIORITY_TRIVIAL ,
@@ -72,16 +76,26 @@ class Issue extends Model
             'major'    => static::PRIORITY_MAJOR   ,
             'critical' => static::PRIORITY_CRITICAL,
             'blocker'  => static::PRIORITY_BLOCKER ,
-        ][$priority];
+        ];
     }
 
-    public static function parseType($kind)
+    public static function parsePriority($priority)
+    {
+        static::priorities()[$priority];
+    }
+
+    public static function types()
     {
         return [
             'task'        => static::TYPE_TASK,
             'bug'         => static::TYPE_BUG,
             'enhancement' => static::TYPE_ENHANCEMENT,
             'proposal'    => static::TYPE_PROPOSAL,
-        ][$kind];
+        ];
+    }
+
+    public static function parseType($kind)
+    {
+        static::types()[$kind];
     }
 }

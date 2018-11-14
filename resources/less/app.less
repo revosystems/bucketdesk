@@ -4,15 +4,18 @@
 @import "../../vendor/badchoice/Hurricane/src/Hurricane-Basic";
 @import "../../vendor/badchoice/Hurricane/src/Hurricane-Inputs";
 @import "../../vendor/badchoice/Hurricane/src/Hurricane-Tables";
-//@import "../../vendor/badchoice/Hurricane/src/Hurricane-Buttons";
+@import "../../vendor/badchoice/Hurricane/src/Hurricane-Buttons";
 @import "../../vendor/badchoice/Hurricane/src/Hurricane-Cards";
 @import "../../vendor/badchoice/Hurricane/src/Hurricane-Grid";
 @import "../../vendor/badchoice/Hurricane/src/Hurricane-Dropdown";
 @import "../../vendor/badchoice/Hurricane/src/Hurricane-Sort";
 
 //@import url('https://fonts.googleapis.com/css?family=Lato:200,300,300italic,700');
+
 @family-serif: "Lato", sans-serif;
 @family-heads: "Lato", sans-serif;
+
+@import "tagsInput";
 
 body{
   margin:0;
@@ -30,4 +33,24 @@ h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6,.navbar-item,.navbar-link{
 a{
   .text-decoration-none;
   color:@brand-second;
+}
+
+input{
+  //height:32px;
+  width:300px;
+}
+
+.pagination {
+  li {
+    display:inline;
+    margin-right:10px;
+  }
+}
+
+table th{
+  background-color:@broken-white;
+}
+
+.resourceSearch, .pagination{
+  .ml4;
 }
