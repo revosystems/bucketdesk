@@ -11,4 +11,5 @@ return [
     'type'         => 'Type',
     'date'         => 'Date',
     'created_at'   => 'Created',
+    'user'         => 'User',
 ];

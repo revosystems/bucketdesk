@@ -9,7 +9,7 @@ class QuickCreateIssue extends MainAction
 {
     public function display($resourceName, $parent_id = null){
         return view('components.actions.quickCreateIssue', [
-            'repositories' => Repository::all()
+            'repositories' => Repository::all(),
         ])->render();
     }
 }

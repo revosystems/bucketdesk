@@ -59,6 +59,10 @@ class Issue extends Model
 
     public function update(array $attributes = [], array $options = [])
     {
+        tap ($attributes['tags'], function($tags) use(&$attributes){
+            unset($attributes['tags']);
+            $this->syncTags($tags);
+        });
         return tap(parent::update($attributes, $options), function(){
             $this->updateBitbucketIssue();
         });
@@ -73,6 +77,11 @@ class Issue extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'username', 'username');
     }
 
     public static function statuses()

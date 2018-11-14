@@ -5,6 +5,7 @@ namespace App\Thrust;
 use App\ThrustHelpers\Actions\QuickCreateIssue;
 use App\ThrustHelpers\Fields\IssueLink;
 use App\ThrustHelpers\Fields\PriorityField;
+use App\ThrustHelpers\Fields\Tags;
 use App\ThrustHelpers\Fields\TypeField;
 use App\ThrustHelpers\Filters\PriorityFilter;
 use App\ThrustHelpers\Filters\StatusFilter;
@@ -28,9 +29,9 @@ class Issue extends Resource
         return [
             IssueLink::make('issue_id')->sortable(),
             Text::make('title')->sortable(),
-            BelongsToMany::make('tags'),
+            Tags::make('tags'),
             BelongsTo::make('repository')->onlyInIndex(),
-            Text::make('username')->sortable(),
+            BelongsTo::make('user')->sortable()->allowNull(),
             PriorityField::make('priority')->sortable()->options(array_flip(\App\Issue::priorities())),
             TypeField::make('type')->sortable()->options(array_flip(\App\Issue::types())),
             Select::make('status')->sortable()->options(array_flip(\App\Issue::statuses())),
