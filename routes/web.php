@@ -22,6 +22,7 @@ Route::get('issues/{issue}/resolve', 'IssuesController@resolve')->name('issues.r
 Route::post('issues/{issue}/comments', 'CommentsController@store')->name('comments.store');
 
 Route::post('webhook', 'WebhookController@handle');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

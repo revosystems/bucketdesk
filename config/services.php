@@ -41,8 +41,8 @@ return [
     ],
     'bitbucket' => [
         'oauth' => [
-            'key' => 'GRCD6f4SVTwSzMFxrS',
-            'secret' => 'V5GC7hmhqzGE2BgtXKp8qZUzHAmFDDMu',
+            'key' => env('BITBUCKET_OAUTH_KEY'),
+            'secret' => env('BITBUCKET_OAUTH_SECRET'),
         ],
         'user' => env('BITBUCKET_USER'),
         'password' => env('BITBUCKET_PASSWORD'),
