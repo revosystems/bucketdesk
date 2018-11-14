@@ -12,7 +12,7 @@ class ResolveField extends Link
         $this->displayCallback = function($object){
             if ($object->status < \App\Issue::STATUS_RESOLVED) {
 //                return "<button><i class='fa fa-wrench'></i> RESOLVE</button>";
-                return "<button>RESOLVE</button>";
+                return "<button class='secondary shadow-outer-3'>RESOLVE</button>";
             }
             return "";
         };
