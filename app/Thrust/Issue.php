@@ -5,16 +5,16 @@ namespace App\Thrust;
 use App\ThrustHelpers\Actions\QuickCreateIssue;
 use App\ThrustHelpers\Fields\IssueLink;
 use App\ThrustHelpers\Fields\PriorityField;
+use App\ThrustHelpers\Fields\ResolveField;
 use App\ThrustHelpers\Fields\Tags;
 use App\ThrustHelpers\Fields\TypeField;
 use App\ThrustHelpers\Filters\PriorityFilter;
+use App\ThrustHelpers\Filters\RepositoryFilter;
 use App\ThrustHelpers\Filters\StatusFilter;
 use App\ThrustHelpers\Filters\TypeFilter;
+use App\ThrustHelpers\Filters\UserFilter;
 use BadChoice\Thrust\Fields\BelongsTo;
-use BadChoice\Thrust\Fields\BelongsToMany;
 use BadChoice\Thrust\Fields\Date;
-use BadChoice\Thrust\Fields\Integer;
-use BadChoice\Thrust\Fields\Link;
 use BadChoice\Thrust\Fields\Select;
 use BadChoice\Thrust\Fields\Text;
 use BadChoice\Thrust\Resource;
@@ -23,6 +23,8 @@ class Issue extends Resource
 {
     public static $model = \App\Issue::class;
     public static $search = ['title', 'repository.name', 'tags.name', 'username'];
+    public static $defaultOrder = 'desc';
+    public static $defaultSort = 'updated_at';
 
     public function fields()
     {
@@ -36,7 +38,9 @@ class Issue extends Resource
             TypeField::make('type')->sortable()->options(array_flip(\App\Issue::types())),
             Select::make('status')->sortable()->options(array_flip(\App\Issue::statuses())),
             Date::make('date')->sortable(),
-            Date::make('created_at')->sortable()->onlyInIndex(),
+//            Date::make('created_at')->sortable()->onlyInIndex(),
+
+            ResolveField::make('id',''),
         ];
     }
 
@@ -58,6 +62,8 @@ class Issue extends Resource
             new PriorityFilter,
             new TypeFilter,
             new StatusFilter,
+            new RepositoryFilter,
+            new UserFilter,
         ];
     }
 

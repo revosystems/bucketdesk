@@ -46,7 +46,7 @@ class Issue extends Model
 
     public function updateBitbucketIssue()
     {
-        (new Bitbucket)->updateIssue($this->repository->account, $this->repository->repo, $this->issue_id, [
+        $this->updateBitbucketWith([
             'assigne' => [
                 'username' => $this->username,
             ],
@@ -59,13 +59,22 @@ class Issue extends Model
 
     public function update(array $attributes = [], array $options = [])
     {
-        tap ($attributes['tags'], function($tags) use(&$attributes){
-            unset($attributes['tags']);
-            $this->syncTags($tags);
-        });
-        return tap(parent::update($attributes, $options), function(){
+        if (isset($attributes['tags'])) {
+            $this->syncTags($attributes['tags']);
+        }
+        return tap(parent::update(array_except($attributes, 'tags'), $options), function(){
             $this->updateBitbucketIssue();
         });
+    }
+
+    public function resolve()
+    {
+        $this->update(['status' => static::STATUS_RESOLVED]);
+    }
+
+    public function updateBitbucketWith($array)
+    {
+        return (new Bitbucket)->updateIssue($this->repository->account, $this->repository->repo, $this->issue_id, $array);
     }
 
 
@@ -130,4 +139,5 @@ class Issue extends Model
     {
         return static::types()[$kind];
     }
+
 }

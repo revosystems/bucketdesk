@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::post('issues', 'IssuesController@store')->name('issues.store');
+Route::get('issues/{issue}/resolve', 'IssuesController@resolve')->name('issues.resolve');
 
 Route::post('webhook', 'WebhookController@handle');
 Auth::routes();
