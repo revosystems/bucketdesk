@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Issue extends Model
 {
@@ -65,7 +66,7 @@ class Issue extends Model
     }
     public static function parseStatus($statusName)
     {
-        static::statuses()[$statusName];
+        return static::statuses()[$statusName];
     }
 
     public static function priorities()
@@ -81,7 +82,7 @@ class Issue extends Model
 
     public static function parsePriority($priority)
     {
-        static::priorities()[$priority];
+        return static::priorities()[$priority];
     }
 
     public static function types()
@@ -96,6 +97,6 @@ class Issue extends Model
 
     public static function parseType($kind)
     {
-        static::types()[$kind];
+        return static::types()[$kind];
     }
 }

@@ -60,20 +60,21 @@ class Bitbucket
         );
     }
 
-    public function createHook($account, $repoSlug)
+    public function createHook($account, $repoSlug, $url)
     {
         $hook  = new \Bitbucket\API\Repositories\Hooks();
         $hook->setCredentials($this->auth);
 
-        /*$hook->create($account, $repoSlug, array(
+        $response = $hook->create($account, $repoSlug, [
             'description' => 'Bucketdesk',
-            'url' => 'http://postb.in/sD8y5ynD',
+            'url' => $url,
             'active' => true,
-            'events' => array(
+            'events' => [
                 'issue:created',
                 'issue:updated'
-            )
-        ));*/
+            ]
+        ]);
+        return $this->parseResponse($response);
     }
 
     public function getGroups($account)

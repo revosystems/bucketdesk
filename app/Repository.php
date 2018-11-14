@@ -14,4 +14,17 @@ class Repository extends Model
         $issue = (new Bitbucket)->createIssue($this->account, $this->repo, $title, $content);
         return Issue::fromBitbucketIssue($this, $issue);
     }
+
+    public function setupWebhook()
+    {
+        $url            = url('/webhook');
+        $bitbucket      = (new Bitbucket);
+        $alreadyCreated = collect($bitbucket->getWebhooks($this->account, $this->repo)->values)->contains(function ($webhook) use ($url) {
+            return $webhook->url == $url || $webhook->description == 'Bucketdesk';
+        });
+        if ($alreadyCreated) {
+            return;
+        }
+        $bitbucket->createHook($this->account, $this->repo, $url);
+    }
 }

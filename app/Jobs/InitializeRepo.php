@@ -31,6 +31,7 @@ class InitializeRepo implements ShouldQueue
         $this->createRepository();
         $this->importDevelopers();
         $this->importIssues();
+        $this->setupWebhook();
     }
 
     private function parseIssues($start, $limit)
@@ -78,5 +79,10 @@ class InitializeRepo implements ShouldQueue
             'account' => $this->account,
             'repo'    => $this->repo,
         ]);
+    }
+
+    private function setupWebhook()
+    {
+        $this->repository->setupWebhook();
     }
 }
