@@ -12,6 +12,6 @@ class Repository extends Model
     public function createIssue($title, $content = '')
     {
         $issue = (new Bitbucket)->createIssue($this->account, $this->repo, $title, $content);
-        Issue::fromBitbucketIssue($this, $issue);
+        return Issue::fromBitbucketIssue($this, $issue);
     }
 }

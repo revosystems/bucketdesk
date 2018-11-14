@@ -8,7 +8,8 @@ class IssuesController extends Controller
 {
     public function store()
     {
-        Repository::find(request('repository_id'))->createIssue(request('title'));
+        $issue = Repository::find(request('repository_id'))->createIssue(request('title'));
+        $issue->attachTags(request('tags'));
         return back();
     }
 }
