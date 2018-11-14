@@ -8,22 +8,19 @@ class Tags extends BelongsToMany
 {
     public function displayInIndex($object)
     {
-        return $this->getValue($object)->reduce(function($carry, $tag){
+        return $this->getValue($object)->reduce(function ($carry, $tag) {
             return $carry . "<span class='tag'>{$tag->name}</span>";
         });
     }
 
-
     public function displayInEdit($object, $inline = false)
     {
         return view('components.fields.tags', [
-            'title' => $this->getTitle(),
+            'title'       => $this->getTitle(),
             'description' => $this->getDescription(),
-            'field' => $this->field,
-            'inline' => false,
-            'object' => $object
+            'field'       => $this->field,
+            'inline'      => $inline,
+            'object'      => $object
         ]);
     }
-
-
 }

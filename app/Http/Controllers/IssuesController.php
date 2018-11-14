@@ -14,6 +14,15 @@ class IssuesController extends Controller
         return back();
     }
 
+    public function show(Issue $issue)
+    {
+        return view('issues.show', [
+            'issue'    => $issue,
+            'remote'   => $issue->getRemote(),
+            'comments' => $issue->getComments(),
+        ]);
+    }
+
     public function resolve(Issue $issue)
     {
         $issue->resolve();

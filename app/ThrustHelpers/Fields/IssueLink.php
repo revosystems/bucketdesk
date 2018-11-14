@@ -15,7 +15,7 @@ class IssueLink extends Link
 
     public function getUrl($issue)
     {
-        return "https://bitbucket.org/{$issue->repository->account}/{$issue->repository->repo}/issues/{$issue->issue_id}";
+        return $issue->remoteLink();
     }
 
 }

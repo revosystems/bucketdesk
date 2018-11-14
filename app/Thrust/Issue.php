@@ -15,6 +15,8 @@ use App\ThrustHelpers\Filters\TypeFilter;
 use App\ThrustHelpers\Filters\UserFilter;
 use BadChoice\Thrust\Fields\BelongsTo;
 use BadChoice\Thrust\Fields\Date;
+use BadChoice\Thrust\Fields\Gravatar;
+use BadChoice\Thrust\Fields\Link;
 use BadChoice\Thrust\Fields\Select;
 use BadChoice\Thrust\Fields\Text;
 use BadChoice\Thrust\Resource;
@@ -30,7 +32,9 @@ class Issue extends Resource
     {
         return [
             IssueLink::make('issue_id')->sortable(),
-            Text::make('title')->sortable(),
+            Link::make('id', 'title')->sortable()->route('issues.show')->displayCallback(function($issue){
+                return $issue->title;
+            })->classes('showPopup'),
             Tags::make('tags'),
             BelongsTo::make('repository')->onlyInIndex(),
             BelongsTo::make('user')->sortable()->allowNull(),

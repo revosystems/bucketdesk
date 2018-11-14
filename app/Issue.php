@@ -77,6 +77,21 @@ class Issue extends Model
         return (new Bitbucket)->updateIssue($this->repository->account, $this->repository->repo, $this->issue_id, $array);
     }
 
+    public function getRemote()
+    {
+        return (new Bitbucket)->getIssue($this->repository->account, $this->repository->repo, $this->issue_id);
+    }
+
+    public function getComments()
+    {
+        return (new Bitbucket)->getIssueComments($this->repository->account, $this->repository->repo, $this->issue_id);
+    }
+
+    public function remoteLink()
+    {
+        return "https://bitbucket.org/{$this->repository->account}/{$this->repository->repo}/issues/{$this->issue_id}";
+    }
+
 
     public function repository()
     {
