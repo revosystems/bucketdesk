@@ -32,9 +32,23 @@ class BitbucketTest extends TestCase
     }
 
     /** @test */
+    public function can_update_issue(){
+        $r = (new Bitbucket)->updateIssue('revo-pos', 'revo-app', 1133, [
+              /*"assignee" => [
+                  "username" => 'asdfad',
+              ],*/
+              "title" => "New Issue 23",
+              "status" => "open",
+              "priority" => "major",
+              "type" => "task",
+        ]);
+        dd($r);
+    }
+
+    /** @test */
     public function can_fetch_a_single_issue()
     {
-        $issue = (new Bitbucket)->getIssue('revo-pos', 'revo-back', 555);
+        $issue = (new Bitbucket)->update('revo-pos', 'revo-back', 555);
         $this->assertEquals('eduardda', $issue->responsible->username);
     }
     
@@ -48,7 +62,8 @@ class BitbucketTest extends TestCase
     /** @test */
     public function can_get_groups()
     {
-        $groups = (new Bitbucket)->getGroups('revo-pos');
-        dd($groups);
+        //$groups = (new Bitbucket)->getGroups('revo-pos');
     }
+
+
 }

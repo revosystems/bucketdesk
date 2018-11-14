@@ -10,6 +10,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
+        <div id="popup" class="popup">
+            <div id="popupContent"></div>
+        </div>
         <div class="content">
             @yield('content')
         </div>

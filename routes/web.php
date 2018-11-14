@@ -18,3 +18,6 @@ Route::get('/', function () {
 Route::post('issues', 'IssuesController@store')->name('issues.store');
 
 Route::post('webhook', 'WebhookController@handle');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

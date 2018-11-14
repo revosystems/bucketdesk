@@ -16,7 +16,7 @@
 @family-heads: "Lato", sans-serif;
 
 @import "tagsInput";
-
+@import "popup";
 body{
   margin:0;
   font-family: @family-serif;
@@ -53,4 +53,12 @@ table th{
 
 .resourceSearch, .pagination{
   .ml4;
+}
+
+.edit:after{
+  content:'edit';
+}
+
+select{
+  width:300px;
 }

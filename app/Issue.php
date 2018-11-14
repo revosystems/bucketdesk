@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\IssueTrackers\Bitbucket\Bitbucket;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 
@@ -42,6 +43,27 @@ class Issue extends Model
             'type'     => Issue::parseType($issue->metadata->kind ?? $issue->kind),
         ]);
     }
+
+    public function updateBitbucketIssue()
+    {
+        (new Bitbucket)->updateIssue($this->repository->account, $this->repository->repo, $this->issue_id, [
+            'assigne' => [
+                'username' => $this->username,
+            ],
+            'title'    => $this->title,
+            'status'   => array_flip(static::statuses())[$this->status],
+            'priority' => array_flip(static::priorities())[$this->priority],
+            'type'     => array_flip(static::types())[$this->type],
+        ]);
+    }
+
+    public function update(array $attributes = [], array $options = [])
+    {
+        return tap(parent::update($attributes, $options), function(){
+            $this->updateBitbucketIssue();
+        });
+    }
+
 
     public function repository()
     {

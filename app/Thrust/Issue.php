@@ -3,6 +3,9 @@
 namespace App\Thrust;
 
 use App\ThrustHelpers\Actions\QuickCreateIssue;
+use App\ThrustHelpers\Fields\IssueLink;
+use App\ThrustHelpers\Fields\PriorityField;
+use App\ThrustHelpers\Fields\TypeField;
 use App\ThrustHelpers\Filters\PriorityFilter;
 use App\ThrustHelpers\Filters\StatusFilter;
 use App\ThrustHelpers\Filters\TypeFilter;
@@ -10,27 +13,29 @@ use BadChoice\Thrust\Fields\BelongsTo;
 use BadChoice\Thrust\Fields\BelongsToMany;
 use BadChoice\Thrust\Fields\Date;
 use BadChoice\Thrust\Fields\Integer;
+use BadChoice\Thrust\Fields\Link;
+use BadChoice\Thrust\Fields\Select;
 use BadChoice\Thrust\Fields\Text;
 use BadChoice\Thrust\Resource;
 
 class Issue extends Resource
 {
     public static $model = \App\Issue::class;
-    public static $search = ['title', 'repo', 'account', 'username'];
+    public static $search = ['title', 'repository.name', 'tags.name', 'username'];
 
     public function fields()
     {
         return [
-            Integer::make('issue_id')->sortable(),
+            IssueLink::make('issue_id')->sortable(),
             Text::make('title')->sortable(),
             BelongsToMany::make('tags'),
-            BelongsTo::make('repository'),
+            BelongsTo::make('repository')->onlyInIndex(),
             Text::make('username')->sortable(),
-            Text::make('priority')->sortable(),
-            Text::make('status')->sortable(),
-            Text::make('type')->sortable(),
+            PriorityField::make('priority')->sortable()->options(array_flip(\App\Issue::priorities())),
+            TypeField::make('type')->sortable()->options(array_flip(\App\Issue::types())),
+            Select::make('status')->sortable()->options(array_flip(\App\Issue::statuses())),
             Date::make('date')->sortable(),
-            Date::make('created_at')->sortable(),
+            Date::make('created_at')->sortable()->onlyInIndex(),
         ];
     }
 
@@ -55,5 +60,8 @@ class Issue extends Resource
         ];
     }
 
-
+    public function canDelete($object)
+    {
+        return false;
+    }
 }

@@ -31,6 +31,15 @@ class Bitbucket
         );
     }
 
+    public function updateIssue($account, $repoSlug, $id, $fields)
+    {
+        $issue = new \Bitbucket\API\Repositories\Issues();
+        $issue->setCredentials($this->auth);
+        return $this->parseResponse(
+            $issue->update($account, $repoSlug, $id, $fields)
+        );
+    }
+
     public function createIssue($account, $repoSlug, $title, $content = '')
     {
         $issue = new \Bitbucket\API\Repositories\Issues();
