@@ -62,6 +62,10 @@ header{
 
 }
 
+table tr{
+  height: 40px;
+}
+
 input{
   //height:32px;
   width:300px;
@@ -83,8 +87,23 @@ table th{
   .ml4;
 }
 
-.edit:after{
-  content:'Edit';
+.thrust-edit{
+  .button; .secondary; .shadow-outer-3;
+}
+.fontAwesome  {
+  /* Char sheet: http://fortawesome.github.io/Font-Awesome/cheatsheet/*/
+  /* Font awesome php: http://kevinkhill.github.io/FontAwesomePHP */
+  font-family: FontAwesome;
+  //color:black;
+  font-size:12px;
+}
+
+.thrust-edit:after{
+  .fontAwesome;  content: "\f040";
+}
+
+td.action{
+  min-width:50px;
 }
 
 select{

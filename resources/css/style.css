@@ -1169,6 +1169,9 @@ header .link a {
   font-weight: 400;
   color: white;
 }
+table tr {
+  height: 40px;
+}
 input {
   width: 300px;
 }
@@ -1186,8 +1189,42 @@ table th {
 .pagination {
   margin-left: 24px;
 }
-.edit:after {
-  content: 'Edit';
+.thrust-edit {
+  background-color: #DB4D52;
+  border: solid 1px #DB4D52;
+  height: 28px;
+  min-width: 96px;
+  color: white;
+  font-size: 12px;
+  padding: 6px;
+  -webkit-transition: all 0.3s ease 0s;
+  transition: all 0.3s ease 0s;
+  text-decoration: none ;
+  cursor: pointer;
+  margin-right: 4px;
+  border-radius: 4px;
+  vertical-align: middle;
+  background-color: white;
+  color: #777;
+  border: 1px solid #ddd;
+  -webkit-box-shadow: 0 1px 3px 0 rgba(89, 105, 128, 0.05), 0 1px 1px 0 rgba(0, 0, 0, 0.025);
+          box-shadow: 0 1px 3px 0 rgba(89, 105, 128, 0.05), 0 1px 1px 0 rgba(0, 0, 0, 0.025);
+}
+.fontAwesome {
+  /* Char sheet: http://fortawesome.github.io/Font-Awesome/cheatsheet/*/
+  /* Font awesome php: http://kevinkhill.github.io/FontAwesomePHP */
+  font-family: FontAwesome;
+  font-size: 12px;
+}
+.thrust-edit:after {
+  /* Char sheet: http://fortawesome.github.io/Font-Awesome/cheatsheet/*/
+  /* Font awesome php: http://kevinkhill.github.io/FontAwesomePHP */
+  font-family: FontAwesome;
+  font-size: 12px;
+  content: "\F040";
+}
+td.action {
+  min-width: 50px;
 }
 select {
   width: 300px;
