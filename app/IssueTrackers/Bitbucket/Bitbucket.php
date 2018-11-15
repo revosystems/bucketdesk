@@ -6,6 +6,11 @@ namespace App\IssueTrackers\Bitbucket;
 class Bitbucket
 {
     protected $auth;
+    protected static $oauthParameters;
+
+    public static function setOAuth($parameters){
+        static::$oauthParameters = $parameters;
+    }
 
     public function __construct()
     {
