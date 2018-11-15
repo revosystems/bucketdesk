@@ -11,6 +11,7 @@ trait Taggable
 
     public function attachTags($tagNames)
     {
+        if (! $tagNames) return $this;
         $this->tags()->attach($this->findTagsIds($tagNames));
 
         return $this;
