@@ -687,7 +687,7 @@
 }
 a {
   text-decoration: none ;
-  color: #46A5E0;
+  color: #357fad;
 }
 a:hover {
   text-decoration: none ;
@@ -1122,7 +1122,7 @@ div.tagsinput span.tag {
 body {
   margin: 0;
   font-family: "Lato", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.42857143;
   font-weight: 300;
   color: #7c8287;
@@ -1145,7 +1145,7 @@ h6,
 }
 a {
   text-decoration: none ;
-  color: #46A5E0;
+  color: #357fad;
 }
 input {
   width: 300px;

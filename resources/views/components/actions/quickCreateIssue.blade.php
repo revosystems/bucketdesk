@@ -3,7 +3,22 @@
         {{ csrf_field() }}
         <input name="title" placeholder="Title" class="mb2" style="width:350px;">
         <input id="tags" name="tags" value="{{request('tags')}}">
-        <select name="repository_id"  class="mt2">
+        <select name="status" style="width:100px">>
+            @foreach(\App\Issue::statuses() as $name => $value)
+                <option value="{{$value}}">{{$name}}</option>
+            @endforeach
+        </select>
+        <select name="type" style="width:100px">
+            @foreach(\App\Issue::types() as $name => $value)
+                <option value="{{$value}}" >{{$name}}</option>
+            @endforeach
+        </select>
+        <select name="priority" style="width:100px">>
+            @foreach(\App\Issue::priorities() as $name => $value)
+                <option value="{{$value}}" @if($value == \App\Issue::PRIORITY_MAJOR) selected @endif >{{$name}}</option>
+            @endforeach
+        </select>
+        <select name="repository_id"  class="mt2" style="width:100px">>
             @foreach ($repositories as $repository)
                 <option value="{{$repository->id}}">{{$repository->name}}</option>
             @endforeach
