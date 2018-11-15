@@ -37,7 +37,7 @@ class Issue extends Resource
             TitleField::make('title', 'title')->sortable(),
             Tags::make('tags'),
             BelongsTo::make('repository')->onlyInIndex(),
-            BelongsTo::make('user')->allowNull(),
+            BelongsTo::make('user')->allowNull()->rowClass('date'),
             PriorityField::make('priority')->sortable()->options(array_flip(\App\Issue::priorities())),
             TypeField::make('type')->sortable()->options(array_flip(\App\Issue::types())),
             Select::make('status')->sortable()->options(array_flip(\App\Issue::statuses())),
