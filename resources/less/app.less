@@ -35,6 +35,33 @@ a{
   color:@brand-second;
 }
 
+
+header{
+  background-color:@brand-fourth;
+  height:50px;
+  img{
+    .ml4;
+    height:50px;
+  }
+  .link{
+    .ml4;
+    margin-top:15px;
+    min-width:80px;
+    padding-bottom: 7px;
+  }
+
+  .link.active{
+    border-bottom:6px solid @brand;
+  }
+
+  .link a{
+    min-width:50px;
+    font-weight: 400;
+    color:white;
+  }
+
+}
+
 input{
   //height:32px;
   width:300px;
@@ -76,4 +103,18 @@ a.button{
 
 .list select{
   width:100px;
+}
+
+.description .title{
+  .ml4; .mt4; .bold; .fs3;
+}
+
+.thrust-actions{
+  margin-bottom: -54px;
+  margin-right: 24px;
+  margin-top: 10px;
+}
+
+.resourceSearch i{
+  .hidden;
 }

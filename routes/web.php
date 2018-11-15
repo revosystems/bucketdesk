@@ -12,13 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('thrust.index', 'issues');
 });
 
 Route::get('bitbucket/oauth', 'BitbucketOauthController@create')->name('bitbucket.oauth.create');
 Route::post('bitbucket/oauth', 'BitbucketOauthController@store')->name('bitbucket.oauth.store');
 
 Route::group(['middleware' => ['auth', 'bitbucketOauth']], function() {
+    Route::get('me/issues', 'MyIssuesController@index')->name('my.issues');
     Route::post('issues', 'IssuesController@store')->name('issues.store');
     Route::get('issues/{issue}', 'IssuesController@show')->name('issues.show');
     Route::get('issues/{issue}/resolve', 'IssuesController@resolve')->name('issues.resolve');

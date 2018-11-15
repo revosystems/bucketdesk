@@ -829,8 +829,8 @@ td.sticky {
 }
 button,
 .button {
-  background-color: #33BC8C;
-  border: solid 1px #33BC8C;
+  background-color: #DB4D52;
+  border: solid 1px #DB4D52;
   height: 28px;
   min-width: 96px;
   color: white;
@@ -1148,6 +1148,28 @@ a {
   text-decoration: none ;
   color: #357fad;
 }
+header {
+  background-color: #2F3235;
+  height: 50px;
+}
+header img {
+  margin-left: 24px;
+  height: 50px;
+}
+header .link {
+  margin-left: 24px;
+  margin-top: 15px;
+  min-width: 80px;
+  padding-bottom: 7px;
+}
+header .link.active {
+  border-bottom: 6px solid #DB4D52;
+}
+header .link a {
+  min-width: 50px;
+  font-weight: 400;
+  color: white;
+}
 input {
   width: 300px;
 }
@@ -1182,4 +1204,18 @@ a.button {
 }
 .list select {
   width: 100px;
+}
+.description .title {
+  margin-left: 24px;
+  margin-top: 24px;
+  font-weight: bold;
+  font-size: 18px;
+}
+.thrust-actions {
+  margin-bottom: -54px;
+  margin-right: 24px;
+  margin-top: 10px;
+}
+.resourceSearch i {
+  display: none;
 }
