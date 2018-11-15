@@ -85,7 +85,7 @@ class Bitbucket
     public function getWebhooks($account, $repoSlug)
     {
         $hooks  = new \Bitbucket\API\Repositories\Hooks();
-        $hooks->setCredentials($this->auth);
+        $this->setAuth($hooks);
 
         return $this->parseResponse(
             $hooks->all($account, $repoSlug)
@@ -95,7 +95,7 @@ class Bitbucket
     public function createHook($account, $repoSlug, $url)
     {
         $hook  = new \Bitbucket\API\Repositories\Hooks();
-        $hook->setCredentials($this->auth);
+        $this->setAuth($hook);
 
         $response = $hook->create($account, $repoSlug, [
             'description' => 'Bucketdesk',
@@ -112,7 +112,7 @@ class Bitbucket
     public function getGroups($account)
     {
         $groups = new \Bitbucket\API\Groups();
-        $groups->setCredentials($this->auth);
+        $this->setAuth($groups);
 
         return $this->parseResponse(
             $groups->get($account)
