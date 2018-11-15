@@ -1172,6 +1172,9 @@ header .link a {
 input {
   width: 300px;
 }
+.pagination {
+  margin-top: -43px;
+}
 .pagination li {
   display: inline;
   margin-right: 10px;
@@ -1210,10 +1213,16 @@ a.button {
   font-weight: bold;
   font-size: 18px;
 }
-.thrust-actions {
-  margin-bottom: -54px;
-  margin-right: 24px;
-  margin-top: 10px;
+.thrust-main-actions {
+  float: right;
+  margin-top: -40px;
+}
+#quickCreateIssue {
+  right: 0px;
+  position: absolute;
+  z-index: 99;
+  -webkit-box-shadow: 0 1px 0 1px rgba(89, 105, 128, 0.1), 0 3px 20px 0 rgba(89, 105, 128, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+          box-shadow: 0 1px 0 1px rgba(89, 105, 128, 0.1), 0 3px 20px 0 rgba(89, 105, 128, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 .resourceSearch i {
   display: none;

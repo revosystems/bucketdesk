@@ -18,7 +18,7 @@ class MyIssuesController extends Controller
         request()->merge([
             'filters'    => base64_encode(http_build_query($filters)),
             'sort'       => request('sort') ?? 'priority',
-            'sort_order' => request('sort_order') ??'desc',
+            'sort_order' => request('sort_order') ?? 'desc',
         ]);
         return (new ThrustController)->index('issues');
     }

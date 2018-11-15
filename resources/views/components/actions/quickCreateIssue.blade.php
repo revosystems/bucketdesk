@@ -1,7 +1,7 @@
 <div class="bg-broken-white p4 hidden" id="quickCreateIssue" >
     <form action="{{route('issues.store')}}" method="POST">
         {{ csrf_field() }}
-        <input name="title" placeholder="Title" class="mb2" style="width:350px;" required>
+        <input id='quick-create-title' name="title" placeholder="Title" class="mb2" style="width:350px;" required>
         <input id="tags" name="tags" value="{{request('tags')}}">
         {{--<select name="status" style="width:100px">>--}}
             {{--@foreach(\App\Issue::statuses() as $name => $value)--}}
@@ -23,12 +23,16 @@
                 <option value="{{$repository->id}}">{{$repository->name}}</option>
             @endforeach
         </select>
-        <button>Create Issue</button>
+        <button>Create</button>
     </form>
 </div>
 
 <div class="ml4" id="quickCreateIssueButton">
-    <button onclick="$('#quickCreateIssue').show('fast'); $('#quickCreateIssueButton').hide('fast')">Create Issue</button>
+    <button onclick="
+            $('#quickCreateIssue').show('fast');
+            $('#quickCreateIssueButton').hide('fast');
+            $('#quick-create-title').focus();
+        ">Create Issue</button>
 </div>
 
 @push('innerScripts')
