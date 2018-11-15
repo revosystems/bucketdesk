@@ -9,7 +9,14 @@ class IssuesController extends Controller
 {
     public function store()
     {
-        $issue = Repository::find(request('repository_id'))->createIssue(request('title'));
+        $this->validate(request(), [
+           'title' => 'required|min:3'
+        ]);
+
+        $issue = Repository::find(request('repository_id'))->createIssue(request('title'), '', [
+            'kind'     => array_flip(Issue::types())[request('type')],
+            'priority' => array_flip(Issue::priorities())[request('priority')]
+        ]);
         $issue->attachTags(request('tags'));
         return back();
     }

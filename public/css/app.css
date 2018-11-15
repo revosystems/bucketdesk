@@ -1163,7 +1163,7 @@ table th {
   margin-left: 24px;
 }
 .edit:after {
-  content: 'edit';
+  content: 'Edit';
 }
 select {
   width: 300px;

@@ -4,16 +4,17 @@ namespace App;
 
 use App\IssueTrackers\Bitbucket\Bitbucket;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Log;
 
 class Issue extends Model
 {
-    const STATUS_NEW     = 1;
-    const STATUS_OPEN    = 2;
-    const STATUS_HOLD    = 3;
-    const STATUS_RESOLVED= 4;
-    const STATUS_CLOSED  = 5;
-    const STATUS_INVALID = 6;
+    const STATUS_NEW        = 1;
+    const STATUS_OPEN       = 2;
+    const STATUS_HOLD       = 3;
+    const STATUS_RESOLVED   = 4;
+    const STATUS_CLOSED     = 5;
+    const STATUS_INVALID    = 6;
+    const STATUS_DUPLICATED = 7;
+    const STATUS_WONTFIX    = 8;
 
     const PRIORITY_TRIVIAL  = 1;
     const PRIORITY_MINOR    = 2;
@@ -34,7 +35,7 @@ class Issue extends Model
     {
         return Issue::updateOrCreate([
             'repository_id' => $repository->id,
-            'issue_id' => $issue->local_id ?? $issue->id,
+            'issue_id'      => $issue->local_id ?? $issue->id,
         ], [
             'username' => $issue->responsible->username ?? ($issue->assignee->username ?? null),
             'title'    => str_limit($issue->title, 255),
@@ -62,7 +63,7 @@ class Issue extends Model
         if (isset($attributes['tags'])) {
             $this->syncTags($attributes['tags']);
         }
-        return tap(parent::update(array_except($attributes, 'tags'), $options), function(){
+        return tap(parent::update(array_except($attributes, 'tags'), $options), function () {
             $this->updateBitbucketIssue();
         });
     }
@@ -72,7 +73,8 @@ class Issue extends Model
         $this->update(['status' => static::STATUS_RESOLVED]);
     }
 
-    public function comment($comment){
+    public function comment($comment)
+    {
         return (new Bitbucket)->createComment($this->repository->account, $this->repository->repo, $this->issue_id, $comment);
     }
 
@@ -96,7 +98,6 @@ class Issue extends Model
         return "https://bitbucket.org/{$this->repository->account}/{$this->repository->repo}/issues/{$this->issue_id}";
     }
 
-
     public function repository()
     {
         return $this->belongsTo(Repository::class);
@@ -115,14 +116,17 @@ class Issue extends Model
     public static function statuses()
     {
         return [
-            'new'     => static::STATUS_NEW     ,
-            'open'    => static::STATUS_OPEN    ,
-            'hold'    => static::STATUS_HOLD    ,
-            'resolved'=> static::STATUS_RESOLVED    ,
-            'closed'  => static::STATUS_CLOSED  ,
-            'invalid' => static::STATUS_INVALID ,
+            'new'      => static::STATUS_NEW     ,
+            'open'     => static::STATUS_OPEN    ,
+            'hold'     => static::STATUS_HOLD    ,
+            'resolved' => static::STATUS_RESOLVED    ,
+            'closed'   => static::STATUS_CLOSED  ,
+            'duplicate'=> static::STATUS_DUPLICATED    ,
+            'wontfix'  => static::STATUS_WONTFIX    ,
+            'invalid'  => static::STATUS_INVALID ,
         ];
     }
+
     public static function parseStatus($statusName)
     {
         return static::statuses()[$statusName];
@@ -158,5 +162,4 @@ class Issue extends Model
     {
         return static::types()[$kind];
     }
-
 }

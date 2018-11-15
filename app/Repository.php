@@ -9,9 +9,9 @@ class Repository extends Model
 {
     protected $guarded = [];
 
-    public function createIssue($title, $content = '')
+    public function createIssue($title, $content = '', $extra = [])
     {
-        $issue = (new Bitbucket)->createIssue($this->account, $this->repo, $title, $content);
+        $issue = (new Bitbucket)->createIssue($this->account, $this->repo, $title, $content, $extra);
         return Issue::fromBitbucketIssue($this, $issue);
     }
 

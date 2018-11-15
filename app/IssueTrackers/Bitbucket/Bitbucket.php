@@ -45,17 +45,17 @@ class Bitbucket
         );
     }
 
-    public function createIssue($account, $repoSlug, $title, $content = '')
+    public function createIssue($account, $repoSlug, $title, $content = '', $extra = [])
     {
         $issue = new \Bitbucket\API\Repositories\Issues();
         $this->setAuth($issue);
         return $this->parseResponse(
-            $issue->create($account, $repoSlug, [
+            $issue->create($account, $repoSlug, array_merge([
                 'title'     => $title,
                 'content'   => $content,
                 'kind'      => 'task',
                 'priority'  => 'major'
-            ])
+            ], $extra))
         );
     }
 

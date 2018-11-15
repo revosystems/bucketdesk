@@ -19,6 +19,7 @@ use BadChoice\Thrust\Fields\Gravatar;
 use BadChoice\Thrust\Fields\Link;
 use BadChoice\Thrust\Fields\Select;
 use BadChoice\Thrust\Fields\Text;
+use BadChoice\Thrust\Filters\Filter;
 use BadChoice\Thrust\Resource;
 
 class Issue extends Resource
@@ -47,6 +48,15 @@ class Issue extends Resource
             ResolveField::make('id',''),
         ];
     }
+
+    protected function getBaseQuery()
+    {
+        if ($this->filtersApplied()->keys()->contains('App\ThrustHelpers\Filters\StatusFilter') && $this->filtersApplied()['App\ThrustHelpers\Filters\StatusFilter'] != '--'){
+            return parent::getBaseQuery();
+        }
+        return parent::getBaseQuery()->where('status', '<', \App\Issue::STATUS_RESOLVED);
+    }
+
 
     public function mainActions()
     {

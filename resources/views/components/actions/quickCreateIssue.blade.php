@@ -1,13 +1,13 @@
 <div class="bg-broken-white p4">
     <form action="{{route('issues.store')}}" method="POST">
         {{ csrf_field() }}
-        <input name="title" placeholder="Title" class="mb2" style="width:350px;">
+        <input name="title" placeholder="Title" class="mb2" style="width:350px;" required>
         <input id="tags" name="tags" value="{{request('tags')}}">
-        <select name="status" style="width:100px">>
-            @foreach(\App\Issue::statuses() as $name => $value)
-                <option value="{{$value}}">{{$name}}</option>
-            @endforeach
-        </select>
+        {{--<select name="status" style="width:100px">>--}}
+            {{--@foreach(\App\Issue::statuses() as $name => $value)--}}
+                {{--<option value="{{$value}}">{{$name}}</option>--}}
+            {{--@endforeach--}}
+        {{--</select>--}}
         <select name="type" style="width:100px">
             @foreach(\App\Issue::types() as $name => $value)
                 <option value="{{$value}}" >{{$name}}</option>
