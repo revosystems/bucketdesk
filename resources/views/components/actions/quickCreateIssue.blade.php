@@ -1,4 +1,4 @@
-<div class="bg-broken-white p4">
+<div class="bg-broken-white p4 hidden" id="quickCreateIssue" >
     <form action="{{route('issues.store')}}" method="POST">
         {{ csrf_field() }}
         <input name="title" placeholder="Title" class="mb2" style="width:350px;" required>
@@ -25,6 +25,10 @@
         </select>
         <button>Create Issue</button>
     </form>
+</div>
+
+<div class="ml4" id="quickCreateIssueButton">
+    <button onclick="$('#quickCreateIssue').show('fast'); $('#quickCreateIssueButton').hide('fast')">New Issue</button>
 </div>
 
 @push('innerScripts')
