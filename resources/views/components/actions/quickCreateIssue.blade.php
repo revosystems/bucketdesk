@@ -40,6 +40,9 @@
         $('#tags').tagsInput({
             'height': '32px',
             'width': '350px',
+            {{--'autocomplete_url':'{{route('tags.index')}}',--}}
+            'placeholderColor' : '#aaaaaa',
+            'defaultText' : 'Add tags'
         });
     </script>
 @endpush
