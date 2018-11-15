@@ -9,12 +9,24 @@ use BadChoice\Thrust\Controllers\ThrustController;
 
 class MyIssuesController extends Controller
 {
-    public function index()
+    public function current()
     {
-        $filters = [
-          StatusFilter::class => Issue::STATUS_OPEN,
-          UserFilter::class   => auth()->user()->username
-        ];
+        return $this->index([
+            StatusFilter::class => Issue::STATUS_OPEN,
+            UserFilter::class   => auth()->user()->username
+        ]);
+    }
+
+    public function all()
+    {
+        return $this->index([
+            //StatusFilter::class => Issue::STATUS_OPEN,
+            UserFilter::class   => auth()->user()->username
+        ]);
+    }
+
+    private function index($filters)
+    {
         request()->merge([
             'filters'    => base64_encode(http_build_query($filters)),
             'sort'       => request('sort') ?? 'priority',

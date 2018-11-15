@@ -19,7 +19,8 @@ Route::get('bitbucket/oauth', 'BitbucketOauthController@create')->name('bitbucke
 Route::post('bitbucket/oauth', 'BitbucketOauthController@store')->name('bitbucket.oauth.store');
 
 Route::group(['middleware' => ['auth', 'bitbucketOauth']], function() {
-    Route::get('me/issues', 'MyIssuesController@index')->name('my.issues');
+    Route::get('me/issues/current', 'MyIssuesController@current')->name('my.issues.current');
+    Route::get('me/issues/all', 'MyIssuesController@all')->name('my.issues.all');
     Route::post('issues', 'IssuesController@store')->name('issues.store');
     Route::get('issues/{issue}', 'IssuesController@show')->name('issues.show');
     Route::get('issues/{issue}/resolve', 'IssuesController@resolve')->name('issues.resolve');
