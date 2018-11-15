@@ -28,7 +28,7 @@
 </div>
 
 <div class="ml4" id="quickCreateIssueButton">
-    <button onclick="$('#quickCreateIssue').show('fast'); $('#quickCreateIssueButton').hide('fast')">New Issue</button>
+    <button onclick="$('#quickCreateIssue').show('fast'); $('#quickCreateIssueButton').hide('fast')">Create Issue</button>
 </div>
 
 @push('innerScripts')
