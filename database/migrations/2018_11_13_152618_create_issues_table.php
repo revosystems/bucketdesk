@@ -20,7 +20,7 @@ class CreateIssuesTable extends Migration
             $table->tinyInteger('type');
             $table->tinyInteger('status');
 
-            $table->text('username')->nullable();
+            $table->string('username')->nullable();
             $table->date('date')->nullable();
 
             $table->timestamps();
