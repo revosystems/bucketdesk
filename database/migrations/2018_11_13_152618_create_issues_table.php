@@ -22,6 +22,7 @@ class CreateIssuesTable extends Migration
 
             $table->string('username')->nullable();
             $table->date('date')->nullable();
+            $table->integer('order')->unsigned()->default(0);
 
             $table->timestamps();
         });

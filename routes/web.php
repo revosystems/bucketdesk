@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth', 'bitbucketOauth']], function() {
     Route::get('tags', 'TagsController@index')->name('tags.index');
 
     Route::get('trello', 'TrelloController@index')->name('trello');
+    Route::put('trello', 'TrelloController@update')->name('trello.update');
 });
 
 Route::post('webhook', 'WebhookController@handle');

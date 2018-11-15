@@ -4,51 +4,59 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     {{--<link rel="stylesheet" href="/resources/demos/style.css">--}}
     <style>
-        #sortable1, #sortable2, #sortable3 { list-style-type: none; margin: 0; float: left; margin-right: 10px; background: #eee; padding: 5px; width: 143px;}
-        #sortable1 li, #sortable2 li, #sortable3 li { margin: 5px; padding: 5px; font-size: 1.2em; width: 120px; }
-        .droptrue{
+        #new, #open, #resolved { list-style-type: none; margin: 0; float: left; margin-right: 10px; background: #eee; padding: 5px; width: 300px;}
+        #new li, #open li, #resolved li { margin: 5px; padding: 5px; font-size: 1em; width: 96%; border-radius:4px; min-height:50px; background-color:white}
+        .sortList{
             min-height: 100px;
         }
     </style>
 
 
-<ul id="sortable1" class="droptrue">
-    <li class="ui-state-default">Can be dropped..</li>
-    <li class="ui-state-default">..on an empty list</li>
-    <li class="ui-state-default">Item 3</li>
-    <li class="ui-state-default">Item 4</li>
-    <li class="ui-state-default">Item 5</li>
-</ul>
+    <div class="ml4 mt4">
+        <ul id="new" class="sortList">
+            @each('trello.card', $new, 'issue')
+        </ul>
 
-<ul id="sortable2" class="dropfalse">
-    <li class="ui-state-highlight">Cannot be dropped..</li>
-    <li class="ui-state-highlight">..on an empty list</li>
-    <li class="ui-state-highlight">Item 3</li>
-    <li class="ui-state-highlight">Item 4</li>
-    <li class="ui-state-highlight">Item 5</li>
-</ul>
+        <ul id="open" class="sortList">
+            @each('trello.card', $open, 'issue')
+        </ul>
 
-<ul id="sortable3" class="droptrue">
-</ul>
+        <ul id="resolved" class="sortList">
+            @each('trello.card', $resolved, 'issue')
+        </ul>
 
-<br style="clear:both">
+        <br style="clear:both">
+    </div>
 @stop
 
 @section('scripts')
     <script>
-        $( function() {
-            $( "ul.droptrue" ).sortable({
-                connectWith: "ul",
-                stop: function( event, ui ) {
-                    console.log("Changed");
-                }
-            });
+        var sortOptions = {
+            connectWith: "ul",
+            stop: function( event, ui ) {
+                console.log(ui.item.index(), ui.item.attr('id'), ui.item.parent().attr('id'));
+                $.ajax({
+                    url : '{{route("trello.update")}}',
+                    method : 'PUT',
+                    data : {
+                        '_token': '{{ csrf_token() }}',
+                        'order': ui.item.index(),
+                        'id': ui.item.attr('id'),
+                        'status': ui.item.parent().attr('id'),
+                    },
+                    success: function(result) {
+                        console.log('issue updated');
+                    },
+                    error: function(request,msg,error) {
+                        console.log('error updating');
+                    }
+                });
+            }
+        };
 
-            $( "ul.dropfalse" ).sortable({
-                connectWith: "ul",
-                dropOnEmpty: false,
-            });
-            $("#sortable1, #sortable2, #sortable3" ).disableSelection();
+        $( function() {
+            $("ul.sortList").sortable(sortOptions);
+            $("#new, #open, #resolved" ).disableSelection();
         } );
     </script>
 @stop
