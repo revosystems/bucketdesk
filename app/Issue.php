@@ -118,7 +118,7 @@ class Issue extends Model
         return [
             'new'      => static::STATUS_NEW     ,
             'open'     => static::STATUS_OPEN    ,
-            'hold'     => static::STATUS_HOLD    ,
+            'on hold'  => static::STATUS_HOLD    ,
             'resolved' => static::STATUS_RESOLVED    ,
             'closed'   => static::STATUS_CLOSED  ,
             'duplicate'=> static::STATUS_DUPLICATED    ,
