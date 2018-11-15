@@ -1174,7 +1174,11 @@ select {
   padding: 4px;
   margin-right: 4px;
   color: white;
+  font-size: 14px;
 }
 a.button {
   font-weight: 400;
+}
+.list select {
+  width: 100px;
 }

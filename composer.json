@@ -10,6 +10,7 @@
         "badchoice/thrust": "^0.3.8",
         "fideloper/proxy": "^4.0",
         "gentle/bitbucket-api": "^1.1",
+        "graham-campbell/markdown": "^10.2",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0"
     },

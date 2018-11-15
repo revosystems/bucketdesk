@@ -7,6 +7,7 @@ use App\ThrustHelpers\Fields\IssueLink;
 use App\ThrustHelpers\Fields\PriorityField;
 use App\ThrustHelpers\Fields\ResolveField;
 use App\ThrustHelpers\Fields\Tags;
+use App\ThrustHelpers\Fields\TitleField;
 use App\ThrustHelpers\Fields\TypeField;
 use App\ThrustHelpers\Filters\PriorityFilter;
 use App\ThrustHelpers\Filters\RepositoryFilter;
@@ -33,12 +34,10 @@ class Issue extends Resource
     {
         return [
             IssueLink::make('issue_id')->sortable(),
-            Link::make('id', 'title')->sortable()->route('issues.show')->displayCallback(function($issue){
-                return $issue->title;
-            })->classes('showPopup'),
+            TitleField::make('title', 'title')->sortable(),
             Tags::make('tags'),
             BelongsTo::make('repository')->onlyInIndex(),
-            BelongsTo::make('user')->sortable()->allowNull(),
+            BelongsTo::make('user')->allowNull(),
             PriorityField::make('priority')->sortable()->options(array_flip(\App\Issue::priorities())),
             TypeField::make('type')->sortable()->options(array_flip(\App\Issue::types())),
             Select::make('status')->sortable()->options(array_flip(\App\Issue::statuses())),
