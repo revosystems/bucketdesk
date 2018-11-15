@@ -10,7 +10,8 @@ class IssuesController extends Controller
     public function store()
     {
         $this->validate(request(), [
-           'title' => 'required|min:3'
+            'title' => 'required|min:3',
+            'tags' => 'nullable|min:2'
         ]);
 
         $issue = Repository::find(request('repository_id'))->createIssue(request('title'), '', [
