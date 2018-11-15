@@ -27,6 +27,8 @@ Route::group(['middleware' => ['auth', 'bitbucketOauth']], function() {
 
     Route::post('issues/{issue}/comments', 'CommentsController@store')->name('comments.store');
     Route::get('tags', 'TagsController@index')->name('tags.index');
+
+    Route::get('trello', 'TrelloController@index')->name('trello');
 });
 
 Route::post('webhook', 'WebhookController@handle');
