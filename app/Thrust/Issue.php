@@ -41,7 +41,7 @@ class Issue extends Resource
             PriorityField::make('priority')->sortable()->options(array_flip(\App\Issue::priorities())),
             TypeField::make('type')->sortable()->options(array_flip(\App\Issue::types())),
             Select::make('status')->sortable()->options(array_flip(\App\Issue::statuses())),
-            Date::make('date')->sortable(),
+            Date::make('date')->sortable()->rowClass('date'),
 //            Date::make('created_at')->sortable()->onlyInIndex(),
 
             ResolveField::make('id',''),

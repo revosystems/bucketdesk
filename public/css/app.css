@@ -1265,3 +1265,6 @@ a.button {
 .resourceSearch i {
   display: none;
 }
+td.date {
+  width: 100px;
+}
