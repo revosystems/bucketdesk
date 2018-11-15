@@ -20,7 +20,7 @@ class Bitbucket
     public function getIssues($account, $repoSlug, $options = [])
     {
         $issue = new \Bitbucket\API\Repositories\Issues();
-        $issue->setCredentials($this->auth);
+        $this->setAuth($issue);
 
         return $this->parseResponse(
             $issue->all($account, $repoSlug, $options)
@@ -30,7 +30,7 @@ class Bitbucket
     public function getIssue($account, $repoSlug, $id)
     {
         $issue = new \Bitbucket\API\Repositories\Issues();
-        $issue->setCredentials($this->auth);
+        $this->setAuth($issue);
         return $this->parseResponse(
             $issue->get($account, $repoSlug, $id)
         );
@@ -39,7 +39,7 @@ class Bitbucket
     public function updateIssue($account, $repoSlug, $id, $fields)
     {
         $issue = new \Bitbucket\API\Repositories\Issues();
-        $issue->setCredentials($this->auth);
+        $this->setAuth($issue);
         return $this->parseResponse(
             $issue->update($account, $repoSlug, $id, $fields)
         );
@@ -48,7 +48,7 @@ class Bitbucket
     public function createIssue($account, $repoSlug, $title, $content = '')
     {
         $issue = new \Bitbucket\API\Repositories\Issues();
-        $issue->setCredentials($this->auth);
+        $this->setAuth($issue);
         return $this->parseResponse(
             $issue->create($account, $repoSlug, [
                 'title'     => $title,
@@ -62,7 +62,7 @@ class Bitbucket
     public function getIssueComments($account, $repoSlug, $id)
     {
         $issue = new \Bitbucket\API\Repositories\Issues();
-        $issue->setCredentials($this->auth);
+        $this->setAuth($issue);
         return $this->parseResponse(
             $issue->comments()->all($account, $repoSlug, $id)
         );
@@ -71,7 +71,7 @@ class Bitbucket
     public function createComment($account, $repoSlug, $id, $comment)
     {
         $issue = new \Bitbucket\API\Repositories\Issues();
-        $issue->setCredentials($this->auth);
+        $this->setAuth($issue);
         return $this->parseResponse(
             $issue->comments()->create($account, $repoSlug, $id, $comment)
         );
@@ -116,6 +116,16 @@ class Bitbucket
 
         return $this->parseResponse(
             $groups->get($account)
+        );
+    }
+
+    private function setAuth($class){
+        //$issue->setCredentials($this->auth);
+        $class->getClient()->addListener(
+            new \Bitbucket\API\Http\Listener\OAuth2Listener([
+                'client_id'         => config('services.bitbucket.oauth.key'),
+                'client_secret'     => config('services.bitbucket.oauth.secret'),
+            ])
         );
     }
 }

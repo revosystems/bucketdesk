@@ -51,7 +51,7 @@ class Issue extends Resource
     public function mainActions()
     {
         return [
-            QuickCreateIssue::make('createIssue')
+            QuickCreateIssue::make('createIssue'),
         ];
     }
 

@@ -3,6 +3,7 @@
 {{ \App\ThrustHelpers\Fields\PriorityField::make('priority')->displayInIndex($issue)}}
 {{ \App\ThrustHelpers\Fields\TypeField::make('type')->displayInIndex($issue)}}
 {{ $issue->repository->name }}
+{{--{{ dd($remote) }}--}}
 <div>
     <img src="{{$remote->reported_by->avatar}}" class="circle">
     <span> {{ $remote->reported_by->display_name }}</span>

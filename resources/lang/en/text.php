@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'issue'        => 'Issue|Issues',
     'issue_id'     => 'Id',
     'title'        => 'Title',
     'tag'          => 'Tag',

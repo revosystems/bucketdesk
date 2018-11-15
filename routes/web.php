@@ -24,9 +24,9 @@ Route::group(['middleware' => ['auth', 'bitbucketOauth']], function() {
     Route::get('issues/{issue}/resolve', 'IssuesController@resolve')->name('issues.resolve');
 
     Route::post('issues/{issue}/comments', 'CommentsController@store')->name('comments.store');
-
-    Route::post('webhook', 'WebhookController@handle');
 });
+
+Route::post('webhook', 'WebhookController@handle');
 
 Auth::routes();
 
