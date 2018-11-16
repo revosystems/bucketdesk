@@ -26,6 +26,7 @@ Route::group(['middleware' => ['auth', 'bitbucketOauth']], function() {
     Route::get('issues/{issue}/resolve', 'IssuesController@resolve')->name('issues.resolve');
 
     Route::post('issues/{issue}/comments', 'CommentsController@store')->name('comments.store');
+    Route::put('issues/{issue}/comments', 'CommentsController@update')->name('comments.update');
     Route::get('tags', 'TagsController@index')->name('tags.index');
 
     Route::get('trello', 'TrelloController@index')->name('trello');

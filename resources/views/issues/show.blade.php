@@ -12,6 +12,7 @@
     'name' => $remote->reported_by->display_name,
     'date' => Carbon\Carbon::parse($remote->utc_created_on),
     'content' => $remote->content,
+    'editable' => true,
 ])
 
 @foreach(collect($comments)->sortBy('utc_created_on') as $comment)
@@ -20,6 +21,7 @@
         'name' => $comment->author_info->display_name,
         'date' => Carbon\Carbon::parse($comment->utc_created_on),
         'content' => $comment->content,
+        'editable' => false,
     ])
 @endforeach
 
