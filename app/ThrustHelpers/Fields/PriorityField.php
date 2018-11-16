@@ -9,7 +9,7 @@ class PriorityField extends Select
 {
     public function displayInIndex($object)
     {
-        $object->presenter()->priority;
+        return $object->presenter()->priority;
     }
 
 }
