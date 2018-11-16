@@ -21,6 +21,10 @@
                 @each('trello.card', $open, 'issue')
             </ul>
 
+            <ul id="on_hold" class="sortList">
+                @each('trello.card', $hold, 'issue')
+            </ul>
+
             <ul id="resolved" class="sortList">
                 @each('trello.card', $resolved, 'issue')
             </ul>

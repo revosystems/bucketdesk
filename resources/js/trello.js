@@ -3,21 +3,21 @@ var sortOptions = {
     stop: function( event, ui ) {
         console.log(ui.item.index(), ui.item.attr('id').replace('issue_', ''), ui.item.parent().attr('id'));
         console.log(ui.item.parent().sortable('serialize', { key: "sort" }));
-        $.ajax({
-            url : updateUrl,
-            method : 'PUT',
-            data : {
-                '_token': csrf_token,
-                'id': ui.item.attr('id').replace('issue_', ''),
-                'status': ui.item.parent().attr('id'),
-            },
-            success: function(result) {
-                console.log('issue updated');
-            },
-            error: function(request,msg,error) {
-                console.log('error updating issue');
-            }
-        });
+        // $.ajax({
+        //     url : updateUrl,
+        //     method : 'PUT',
+        //     data : {
+        //         '_token': csrf_token,
+        //         'id': ui.item.attr('id').replace('issue_', ''),
+        //         'status': ui.item.parent().attr('id'),
+        //     },
+        //     success: function(result) {
+        //         console.log('issue updated');
+        //     },
+        //     error: function(request,msg,error) {
+        //         console.log('error updating issue');
+        //     }
+        // });
 
         $.ajax({
             url : updateUrl,
@@ -26,14 +26,14 @@ var sortOptions = {
                 '_token': csrf_token,
                 'order': ui.item.index(),
                 'id': ui.item.attr('id').replace('issue_', ''),
-                'status': ui.item.parent().attr('id'),
+                'status': ui.item.parent().attr('id').replace('_', ' '),
                 'sort' : ui.item.parent().sortable('serialize', { key: "sort" }),
             },
             success: function(result) {
-                console.log('Orders updated');
+                console.log('Issue and order updated');
             },
             error: function(request,msg,error) {
-                console.log('error updating orders');
+                console.log('error updating issue or orders');
             }
         });
 

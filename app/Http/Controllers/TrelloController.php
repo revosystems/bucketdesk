@@ -11,12 +11,13 @@ class TrelloController extends Controller
     public function index()
     {
         $username = request('username') ?? auth()->user()->username;
-        $issues = Issue::where('username', $username)->whereIn('status', [Issue::STATUS_NEW, Issue::STATUS_OPEN, Issue::STATUS_RESOLVED])->orderBy(DB::raw('`order` IS NULL, `order`'), 'asc')->get();
+        $issues = Issue::where('username', $username)->whereIn('status', [Issue::STATUS_NEW, Issue::STATUS_OPEN, Issue::STATUS_RESOLVED, Issue::STATUS_HOLD])->orderBy(DB::raw('`order` IS NULL, `order`'), 'asc')->get();
         return view('trello.index', [
             'username'  => $username,
             'users'     => User::all(),
             'new'       => $issues->where('status', Issue::STATUS_NEW),
             'open'      => $issues->where('status', Issue::STATUS_OPEN),
+            'hold'      => $issues->where('status', Issue::STATUS_HOLD),
             'resolved'  => $issues->where('status', Issue::STATUS_RESOLVED),
         ]);
     }
