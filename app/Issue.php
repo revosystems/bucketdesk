@@ -40,7 +40,7 @@ class Issue extends Model
             'repository_id' => $repository->id,
             'issue_id'      => $issue->local_id ?? $issue->id,
         ], [
-            'username' => $issue->responsible->username ?? ($issue->assignee->username ?? null),
+            'username' => $issue->responsible->username ?? ($issue->assignee['username'] ?? null),
             'title'    => str_limit($issue->title, 255),
             'status'   => Issue::parseStatus($issue->status ?? $issue->state),
             'priority' => Issue::parsePriority($issue->priority),

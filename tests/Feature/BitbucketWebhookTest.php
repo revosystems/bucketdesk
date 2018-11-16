@@ -455,7 +455,25 @@ class BitbucketWebhookTest extends TestCase
     "votes": 0,
     "watches": 1,
     "priority": "major",
-    "assignee": null,
+    "assignee": {
+      "username": "PauRevo",
+      "display_name": "Pau Benet Prat",
+      "account_id": "557058:a29e0c4c-2c1b-476d-a3b6-ef4728cdba79",
+      "links": {
+        "self": {
+          "href": "https://api.bitbucket.org/2.0/users/PauRevo"
+        },
+        "html": {
+          "href": "https://bitbucket.org/PauRevo/"
+        },
+        "avatar": {
+          "href": "https://bitbucket.org/account/PauRevo/avatar/"
+        }
+      },
+      "type": "user",
+      "nickname": "PauRevo",
+      "uuid": "{002f0676-719e-4930-b9b1-0b67bf815279}"
+    },
     "state": "new",
     "version": null,
     "edited_on": null,
