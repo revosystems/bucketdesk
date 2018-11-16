@@ -14,7 +14,7 @@
     'content' => $remote->content,
 ])
 
-@foreach($comments as $comment)
+@foreach(collect($comments)->sortBy('utc_created_on') as $comment)
     @include('components.comment', [
         'avatar' => $comment->author_info->avatar,
         'name' => $comment->author_info->display_name,
