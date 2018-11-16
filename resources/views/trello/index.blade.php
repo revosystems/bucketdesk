@@ -29,7 +29,7 @@
             </ul>
 
             <ul id="resolved" class="sortList">
-                Closed
+                Resolved
                 @each('trello.card', $resolved, 'issue')
             </ul>
 
