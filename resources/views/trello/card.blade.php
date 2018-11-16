@@ -7,12 +7,10 @@
             <a class="gray" href="{{ $issue->remoteLink() }}" target="__blank">#{{$issue->issue_id}}</a>
             {{ $issue->repository->name }}
         </strong>
-        {{ \App\ThrustHelpers\Fields\PriorityField::make('priority')->displayInIndex($issue)}}
-        {{ \App\ThrustHelpers\Fields\TypeField::make('type')->displayInIndex($issue)}}
+        {{ $issue->presenter()->priority }}
+        {{ $issue->presenter()->type }}
         <div>
-        {!! $issue->tags->reduce(function($carry, $tag){
-            return $carry . "<span class='tag'>{$tag->name}</span>";
-        }) !!}
+        {!! $issue->presenter()->tags !!}
         </div>
     </div>
     <a href="{{ route('issues.show', $issue)}}" class="showPopup">

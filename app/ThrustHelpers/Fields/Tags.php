@@ -8,9 +8,7 @@ class Tags extends BelongsToMany
 {
     public function displayInIndex($object)
     {
-        return $this->getValue($object)->reduce(function ($carry, $tag) {
-            return $carry . "<span class='tag'>{$tag->name}</span>";
-        });
+        return $object->presenter()->tags;
     }
 
     public function displayInEdit($object, $inline = false)

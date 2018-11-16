@@ -32,6 +32,7 @@ class Issue extends Model
     use Taggable;
 
     protected $shouldIgnoreBitbucketUpdate = false;
+    private $presenter;
 
     public static function fromBitbucketIssue($repository, $issue)
     {
@@ -168,5 +169,13 @@ class Issue extends Model
     public static function parseType($kind)
     {
         return static::types()[$kind];
+    }
+
+    public function presenter()
+    {
+        if(! $this->presenter){
+            $this->presenter = new IssuePresenter($this);
+        }
+        return $this->presenter;
     }
 }

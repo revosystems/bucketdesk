@@ -1,12 +1,10 @@
 <h2>#{{ $issue->issue_id }} {{ $issue->title }}</h2>
 <div class="mb2">
     {{ array_flip(\App\Issue::statuses())[$issue->status] }}
-    {{ \App\ThrustHelpers\Fields\PriorityField::make('priority')->displayInIndex($issue)}}
-    {{ \App\ThrustHelpers\Fields\TypeField::make('type')->displayInIndex($issue)}}
+    {{ $issue->presenter()->priority }}
+    {{ $issue->presenter()->type }}
     {{ $issue->repository->name }}
-    {!! $issue->tags->reduce(function($carry, $tag){
-        return $carry . "<span class='tag'>{$tag->name}</span>";
-    }) !!}
+    {!! $issue->presenter()->tags !!}
 </div>
 {{--{{ dd($remote) }}--}}
 @include('components.comment', [
@@ -25,7 +23,7 @@
     ])
 @endforeach
 
-<div class="mb3 pt3 pb3 bb">
+<div class="mb3 pt3 pb3 bb mt2">
     <form action="{{route('comments.store', $issue)}}" method="POST">
         {{ csrf_field() }}
         <textarea name="comment" class="w100" rows="8"></textarea>
