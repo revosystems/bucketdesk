@@ -16,7 +16,8 @@ class IssuesController extends Controller
 
         $issue = Repository::find(request('repository_id'))->createIssue(request('title'), '', [
             'kind'     => array_flip(Issue::types())[request('type')],
-            'priority' => array_flip(Issue::priorities())[request('priority')]
+            'priority' => array_flip(Issue::priorities())[request('priority')],
+            //'username' => request('username'), the create issues doesn't have it
         ]);
         $issue->attachTags(request('tags'));
         return back();
