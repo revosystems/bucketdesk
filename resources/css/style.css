@@ -1152,7 +1152,9 @@ div.tagsinput span.tag {
   font-size: 14px;
 }
 .sortList {
-  min-height: 250px;
+  min-height: 88vh;
+  max-height: 88vh;
+  overflow: scroll;
 }
 .configForm:first-child {
   margin-top: -20px;
