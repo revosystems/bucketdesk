@@ -7,7 +7,7 @@
             <p> {!! app('markdown')->convertToHtml($content) !!}</p>
         </div>
         @if ($editable)
-            <a class='link editable pointer' onclick="$('.editable').hide(); $('#new-edit').show()">Edit</a>
+            <a class='link editable pointer fs2' onclick="$('.editable').hide(); $('#new-edit').show()">Edit</a>
             <div id='new-edit' class="hidden mb3">
                 <form action="{{route('comments.update', $issue)}}" method="POST">
                     {{ csrf_field() }}
