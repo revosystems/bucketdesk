@@ -1154,6 +1154,23 @@ div.tagsinput span.tag {
 .sortList {
   min-height: 250px;
 }
+.configForm:first-child {
+  margin-top: -20px;
+}
+.configForm {
+  padding: 4px;
+  border-bottom: 1px solid #F0F0F0;
+  margin-bottom: 12px;
+  margin-left: 8px;
+}
+.configForm .field {
+  margin-left: 150px;
+  margin-top: -20px;
+  margin-bottom: 12px;
+}
+.configForm .label {
+  font-size: 14px;
+}
 body {
   margin: 0;
   font-family: "Lato", sans-serif;
