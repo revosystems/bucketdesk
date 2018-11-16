@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Issue;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TrelloController extends Controller
 {
     public function index()
     {
-
-        $issues = Issue::whereIn('status', [Issue::STATUS_NEW, Issue::STATUS_OPEN, Issue::STATUS_RESOLVED])->orderBy(DB::raw('`order` IS NULL, `order`'), 'asc')->get();
+        $username = request('username') ?? auth()->user()->username;
+        $issues = Issue::where('username', $username)->whereIn('status', [Issue::STATUS_NEW, Issue::STATUS_OPEN, Issue::STATUS_RESOLVED])->orderBy(DB::raw('`order` IS NULL, `order`'), 'asc')->get();
         return view('trello.index', [
             'new'       => $issues->where('status', Issue::STATUS_NEW),
             'open'      => $issues->where('status', Issue::STATUS_OPEN),
@@ -21,10 +20,24 @@ class TrelloController extends Controller
 
     public function update()
     {
-        Issue::findOrFail(request('id'))->update([
-            'order'  => request('order'),
-            'status' => Issue::statuses()[request('status')],
+        $newStatus = Issue::statuses()[request('status')];
+        $issue     = Issue::findOrFail(request('id'));
+        $issue->ignoreBitbucketUpdate($issue->status == $newStatus)->update([
+            'status' => $newStatus,
         ]);
+        $this->sortIssues();
         return response()->json('ok');
+    }
+
+    public function sortIssues()
+    {
+        $sortedIds = collect(explode('&', request('sort')))->map(function ($sort) {
+            return explode('=', $sort)[1];
+        });
+        $issues = Issue::find($sortedIds);
+        $sorted = array_flip($sortedIds->toArray());
+        $issues->each(function ($issue) use ($sorted) {
+            $issue->ignoreBitbucketUpdate()->update(['order' => $sorted[$issue->id]]);
+        });
     }
 }

@@ -1119,6 +1119,41 @@ div.tagsinput span.tag {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
+#new,
+#open,
+#resolved {
+  list-style-type: none;
+  margin: 0;
+  float: left;
+  margin-right: 10px;
+  background: #eee;
+  padding: 5px;
+  width: 300px;
+  border-radius: 4px;
+}
+#new li,
+#open li,
+#resolved li {
+  margin: 5px;
+  padding: 5px;
+  font-size: 1em;
+  width: 96%;
+  border-radius: 4px;
+  min-height: 50px;
+  background-color: white;
+  border: none;
+  -webkit-box-shadow: 0 1px 3px 0 rgba(89, 105, 128, 0.05), 0 1px 1px 0 rgba(0, 0, 0, 0.025);
+          box-shadow: 0 1px 3px 0 rgba(89, 105, 128, 0.05), 0 1px 1px 0 rgba(0, 0, 0, 0.025);
+  overflow: hidden;
+}
+#new li p,
+#open li p,
+#resolved li p {
+  font-size: 14px;
+}
+.sortList {
+  min-height: 250px;
+}
 body {
   margin: 0;
   font-family: "Lato", sans-serif;

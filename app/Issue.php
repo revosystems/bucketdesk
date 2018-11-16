@@ -31,6 +31,8 @@ class Issue extends Model
 
     use Taggable;
 
+    protected $shouldIgnoreBitbucketUpdate = false;
+
     public static function fromBitbucketIssue($repository, $issue)
     {
         return Issue::updateOrCreate([
@@ -64,8 +66,15 @@ class Issue extends Model
             $this->syncTags($attributes['tags']);
         }
         return tap(parent::update(array_except($attributes, 'tags'), $options), function () {
+            if ($this->shouldIgnoreBitbucketUpdate) return;
             $this->updateBitbucketIssue();
         });
+    }
+
+    public function ignoreBitbucketUpdate($ignore = true)
+    {
+        $this->shouldIgnoreBitbucketUpdate = $ignore;
+        return $this;
     }
 
     public function resolve()
