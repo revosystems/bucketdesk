@@ -1128,8 +1128,11 @@ div.tagsinput span.tag {
   margin-right: 10px;
   background: #eee;
   padding: 5px;
-  width: 300px;
+  width: 30vw;
+  min-width: 300px;
   border-radius: 4px;
+  -webkit-box-shadow: 0 1px 3px 0 rgba(89, 105, 128, 0.05), 0 1px 1px 0 rgba(0, 0, 0, 0.025);
+          box-shadow: 0 1px 3px 0 rgba(89, 105, 128, 0.05), 0 1px 1px 0 rgba(0, 0, 0, 0.025);
 }
 #new li,
 #open li,

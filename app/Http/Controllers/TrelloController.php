@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Issue;
+use App\User;
 use Illuminate\Support\Facades\DB;
 
 class TrelloController extends Controller
@@ -12,6 +13,8 @@ class TrelloController extends Controller
         $username = request('username') ?? auth()->user()->username;
         $issues = Issue::where('username', $username)->whereIn('status', [Issue::STATUS_NEW, Issue::STATUS_OPEN, Issue::STATUS_RESOLVED])->orderBy(DB::raw('`order` IS NULL, `order`'), 'asc')->get();
         return view('trello.index', [
+            'username'  => $username,
+            'users'     => User::all(),
             'new'       => $issues->where('status', Issue::STATUS_NEW),
             'open'      => $issues->where('status', Issue::STATUS_OPEN),
             'resolved'  => $issues->where('status', Issue::STATUS_RESOLVED),
@@ -31,6 +34,7 @@ class TrelloController extends Controller
 
     public function sortIssues()
     {
+        if (! request()->has('sort')) return;
         $sortedIds = collect(explode('&', request('sort')))->map(function ($sort) {
             return explode('=', $sort)[1];
         });

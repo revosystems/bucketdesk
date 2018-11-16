@@ -1,5 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/trello.js": "/js/trello.js",
     "/css/app.css": "/css/app.css",
     "/../resources/css/style.css": "/../resources/css/style.css"
 }
