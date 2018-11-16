@@ -34,10 +34,8 @@ class BitbucketTest extends TestCase
     /** @test */
     public function can_update_issue(){
         $r = (new Bitbucket)->updateIssue('revo-pos', 'revo-app', 1133, [
-              /*"assignee" => [
-                  "username" => 'asdfad',
-              ],*/
-              "title" => "New Issue 23",
+              "responsible" =>  'BadChoice',
+              "title" => "New Issue 223",
               "status" => "open",
               "priority" => "major",
               "type" => "task",

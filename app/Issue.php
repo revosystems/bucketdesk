@@ -50,9 +50,7 @@ class Issue extends Model
     public function updateBitbucketIssue()
     {
         $this->updateBitbucketWith([
-            'assigne' => [
-                'username' => $this->username,
-            ],
+            'responsible' => $this->username,
             'title'    => $this->title,
             'status'   => array_flip(static::statuses())[$this->status],
             'priority' => array_flip(static::priorities())[$this->priority],
