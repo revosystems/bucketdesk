@@ -12,6 +12,11 @@ class IssuePresenter
         $this->issue = $issue;
     }
 
+    public function status()
+    {
+        return array_flip(Issue::statuses())[$this->issue->status];
+    }
+
     public function priority()
     {
         return [

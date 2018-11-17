@@ -27,11 +27,14 @@ class SlackCommandsTest extends TestCase
     public function it_can_create_an_issue_from_slack()
     {
         $this->withoutExceptionHandling();
-        factory(Repository::class)->create(['name' => 'xef-back']);
+        factory(Repository::class)->create(['name' => 'xef-back', 'account' => 'revo-pos', 'repo' => 'revo-xef']);
         $response = $this->post('slack', ['text' => 'xef-back hello baby']);
 
         $response->assertStatus(200);
         $this->assertEquals(1, Issue::count());
+        $response->assertJsonFragment([
+            "text" => "https://bitbucket.org/revo-pos/revo-xef/issues/123",
+        ]);
 
         tap (Issue::first(), function($issue){
             $this->assertEquals("hello baby", $issue->title);

@@ -25,12 +25,37 @@ class SlackController extends Controller
             ]);
         }
 
-        $repository->createIssue(trim(str_replace($repoName, '', $text)));
+        $issue = $repository->createIssue(trim(str_replace($repoName, '', $text)));
 
         return response()->json([
-            'text'        => 'Issue created at revo-xef',
+            'text'        => " Great! Issue #{$issue->issue_id} created at {$repository->name}",
             'attachments' => [
-                'text' => 'Awesome!'
+                [
+                    'text' => $issue->remoteLink(),
+                    "fields" =>  [
+                        [
+                            "title" =>  "Repo",
+                            "value" => $repository->name,
+                            "short" => true
+                        ],[
+                            "title" =>  "Issue",
+                            "value" => $issue->issue_id,
+                            "short" => true
+                        ],[
+                            "title" =>  "Status",
+                            "value" => $issue->presenter()->status,
+                            "short" => true
+                        ],[
+                            "title" =>  "Priority",
+                            "value" => $issue->presenter()->priority,
+                            "short" => true
+                        ], [
+                            "title" =>  "Type",
+                            "value" => $issue->presenter()->type,
+                            "short" => true
+                        ],
+                    ]
+                ]
             ]
         ]);
     }
