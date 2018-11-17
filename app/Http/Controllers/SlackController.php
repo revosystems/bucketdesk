@@ -28,11 +28,13 @@ class SlackController extends Controller
         $priority     = $slackCommand->extractPriority($text);
         $status       = $slackCommand->extractStatus($text);
         $type         = $slackCommand->extractType($text);
+        $user         = $slackCommand->extractUser($text);
 
         $issue = $repository->createIssue($text, '', [
-            'priority' => $priority,
-            'status'   => $status,
-            'kind'     => $type,
+            'responsible' => $user->username ?? null,
+            'priority'    => $priority,
+            'status'      => $status,
+            'kind'        => $type,
         ]);
         $issue->attachTags($tags);
 
@@ -61,6 +63,10 @@ class SlackController extends Controller
                         ], [
                             'title' => 'Type',
                             'value' => $issue->presenter()->type,
+                            'short' => true
+                        ],[
+                            'title' => 'Assigne',
+                            'value' => $issue->username ?? '--',
                             'short' => true
                         ],
                     ]

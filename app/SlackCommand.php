@@ -30,6 +30,22 @@ class SlackCommand extends Model
         })->toArray();
     }
 
+    public function extractUser(&$string, $replaceString = true)
+    {
+        $userPattern = '(@\w+)';
+        preg_match_all("/{$userPattern}/", $string, $users);
+        $user          = null;
+        $foundUsername = collect($users[0])->first(function ($username) use (&$user) {
+            $username = str_replace('@', '', $username);
+            $user = User::where('username', 'like', "%{$username}%")->orWhere('name', 'like', "%{$username}%")->first();
+            return $user != null;
+        });
+        if ($foundUsername && $replaceString) {
+            $string = str_replace($foundUsername, '', $string);
+        }
+        return $user;
+    }
+
     public function extractPriority(&$text, $default = 'major', $replaceString = true)
     {
         return $this->extractFrom(array_flip(Issue::priorities()), $text, $default, $replaceString);

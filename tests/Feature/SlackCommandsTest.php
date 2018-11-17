@@ -6,6 +6,7 @@ use App\Issue;
 use App\IssueTrackers\Bitbucket\Bitbucket;
 use App\IssueTrackers\Bitbucket\FakeBitbucket;
 use App\Repository;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Response;
 use Tests\TestCase;
@@ -84,6 +85,21 @@ class SlackCommandsTest extends TestCase
             $this->assertEquals(Issue::STATUS_OPEN, $issue->status);
             $this->assertEquals(Issue::TYPE_TASK, $issue->type);
             $this->assertEquals(Issue::PRIORITY_BLOCKER, $issue->priority);
+        });
+    }
+
+    /** @test */
+    public function it_can_assign_the_new_issue_to_an_user(){
+        $this->withoutExceptionHandling();
+        factory(Repository::class)->create(['name' => 'xef-back', 'account' => 'revo-pos', 'repo' => 'revo-xef']);
+        factory(User::class)->create(['username' => 'pepe']);
+
+        $response = $this->post('slack', ['text' => 'xef-back hello @pep @amazon']);
+
+        $response->assertStatus(200);
+        tap (Issue::first(), function($issue){
+            $this->assertEquals('hello  @amazon', $issue->title);
+            $this->assertEquals('pepe', $issue->username);
         });
     }
 }
