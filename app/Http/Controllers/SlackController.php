@@ -39,7 +39,7 @@ class SlackController extends Controller
         $issue->attachTags($tags);
 
         return response()->json([
-            'text'        => " Great! Issue #{$issue->issue_id} created at {$repository->name}",
+            'text'        => " Great! Issue #{$issue->issue_id} created at {$repository->name}\n{$issue->title}",
             'attachments' => [
                 [
                     'text'   => $issue->remoteLink(),

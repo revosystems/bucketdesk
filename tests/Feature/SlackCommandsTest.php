@@ -94,12 +94,13 @@ class SlackCommandsTest extends TestCase
         factory(Repository::class)->create(['name' => 'xef-back', 'account' => 'revo-pos', 'repo' => 'revo-xef']);
         factory(User::class)->create(['username' => 'pepe']);
 
-        $response = $this->post('slack', ['text' => 'xef-back hello @pep @amazon']);
+        $response = $this->post('slack', ['text' => 'xef-back hello @pep @amazon :open']);
 
         $response->assertStatus(200);
         tap (Issue::first(), function($issue){
             $this->assertEquals('hello  @amazon', $issue->title);
             $this->assertEquals('pepe', $issue->username);
+            $this->assertEquals(Issue::STATUS_OPEN, $issue->status);
         });
     }
 }
