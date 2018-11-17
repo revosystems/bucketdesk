@@ -47,6 +47,9 @@ return [
         'user' => env('BITBUCKET_USER'),
         'password' => env('BITBUCKET_PASSWORD'),
         'developersGroup' => 'Developers',
+    ],
+    'slack' => [
+        'token' => env('SLACK_TOKEN'),
     ]
 
 ];

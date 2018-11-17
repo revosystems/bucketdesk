@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth', 'bitbucketOauth']], function() {
 });
 
 Route::post('webhook', 'WebhookController@handle');
+Route::post('slack', 'SlackController@handle');
 
 Auth::routes();
 
