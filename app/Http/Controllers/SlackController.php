@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repository;
+use App\SlackCommand;
 use Illuminate\Support\Facades\Log;
 
 class SlackController extends Controller
@@ -25,7 +26,9 @@ class SlackController extends Controller
             ]);
         }
 
+        $tags = (new SlackCommand)->extractTags($text);
         $issue = $repository->createIssue(trim(str_replace($repoName, '', $text)));
+        $issue->attachTags($tags);
 
         return response()->json([
             'text'        => " Great! Issue #{$issue->issue_id} created at {$repository->name}",

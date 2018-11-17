@@ -40,7 +40,7 @@ class SlackCommandsTest extends TestCase
             $this->assertEquals("hello baby", $issue->title);
             $this->assertCount(1, $this->fakeBitbucket->issues);
             $this->assertEquals(1, $issue->repository_id);
-            //$this->assertEquals("tag1, tag2", $issue->tagsString());
+            $this->assertCount(0, $issue->tags);
         });
     }
 
@@ -57,6 +57,15 @@ class SlackCommandsTest extends TestCase
     /** @test */
     public function it_can_extract_tags_from_title()
     {
+        $this->withoutExceptionHandling();
+        factory(Repository::class)->create(['name' => 'xef-back', 'account' => 'revo-pos', 'repo' => 'revo-xef']);
+        $response = $this->post('slack', ['text' => 'xef-back hello #tag1 baby with #tag2']);
 
+        $response->assertStatus(200);
+        $this->assertEquals(1, Issue::count());
+        tap (Issue::first(), function($issue){
+            $this->assertCoun(2, $issue->tags);
+            $this->assertEquals("tag1,tag2", $issue->tagsString());
+        });
     }
 }
