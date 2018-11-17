@@ -8,7 +8,8 @@ class Bitbucket
     protected $auth;
     protected static $oauthParameters;
 
-    public static function setOAuth($parameters){
+    public static function setOAuth($parameters)
+    {
         static::$oauthParameters = $parameters;
     }
 
@@ -54,7 +55,8 @@ class Bitbucket
                 'title'     => $title,
                 'content'   => $content,
                 'kind'      => 'task',
-                'priority'  => 'major'
+                'priority'  => 'major',
+                'status'    => 'new'
             ], $extra))
         );
     }
@@ -99,9 +101,9 @@ class Bitbucket
 
         $response = $hook->create($account, $repoSlug, [
             'description' => 'Bucketdesk',
-            'url' => $url,
-            'active' => true,
-            'events' => [
+            'url'         => $url,
+            'active'      => true,
+            'events'      => [
                 'issue:created',
                 'issue:updated'
             ]
@@ -119,7 +121,8 @@ class Bitbucket
         );
     }
 
-    private function setAuth($class){
+    private function setAuth($class)
+    {
         //$issue->setCredentials($this->auth);
         $class->getClient()->addListener(
             new \Bitbucket\API\Http\Listener\OAuth2Listener(static::$oauthParameters ?? [

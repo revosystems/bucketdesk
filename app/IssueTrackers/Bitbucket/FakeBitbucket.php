@@ -12,9 +12,9 @@ class FakeBitbucket
         return (object)[
             'id'       => 123,
             'title'    => $title,
-            'state'    => 'new',
-            'priority' => 'major',
-            'kind'     => 'bug'
+            'state'    => $extra['status'] ?? 'new',
+            'priority' => $extra['priority'] ?? 'major',
+            'kind'     => $extra['kind'] ?? 'bug',
         ];
     }
 }

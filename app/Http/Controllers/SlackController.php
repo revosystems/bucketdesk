@@ -10,52 +10,58 @@ class SlackController extends Controller
 {
     public function handle()
     {
-        return $this->parseCommand();
+        return $this->parseCommand(new SlackCommand, request('text'));
     }
 
-    private function parseCommand()
+    private function parseCommand(SlackCommand $slackCommand, $text)
     {
-        $text = request('text');
         Log::info("Slack command received with text: {$text}");
+        $repository = $slackCommand->extractRepository($text);
 
-        $repoName   = explode(' ', trim($text))[0];
-        $repository = Repository::where('name', $repoName)->orWhere('repo', $repoName)->first();
-        if (! $repository) {
+        if (! $repository instanceof Repository) {
             return response()->json([
-                'text' => "Sorry but the repository *{$repoName}* does not exist"
+                'text' => "Sorry but the repository *{$repository}* does not exist"
             ]);
         }
 
-        $tags = (new SlackCommand)->extractTags($text);
-        $issue = $repository->createIssue(trim(str_replace($repoName, '', $text)));
+        $tags         = $slackCommand->extractTags($text);
+        $priority     = $slackCommand->extractPriority($text);
+        $status       = $slackCommand->extractStatus($text);
+        $type         = $slackCommand->extractType($text);
+
+        $issue = $repository->createIssue($text, '', [
+            'priority' => $priority,
+            'status'   => $status,
+            'kind'     => $type,
+        ]);
         $issue->attachTags($tags);
 
         return response()->json([
             'text'        => " Great! Issue #{$issue->issue_id} created at {$repository->name}",
             'attachments' => [
                 [
-                    'text' => $issue->remoteLink(),
-                    "fields" =>  [
+                    'text'   => $issue->remoteLink(),
+                    'fields' => [
                         [
-                            "title" =>  "Repo",
-                            "value" => $repository->name,
-                            "short" => true
+                            'title' => 'Repo',
+                            'value' => $repository->name,
+                            'short' => true
                         ],[
-                            "title" =>  "Issue",
-                            "value" => $issue->issue_id,
-                            "short" => true
+                            'title' => 'Issue',
+                            'value' => $issue->issue_id,
+                            'short' => true
                         ],[
-                            "title" =>  "Status",
-                            "value" => $issue->presenter()->status,
-                            "short" => true
+                            'title' => 'Status',
+                            'value' => $issue->presenter()->status,
+                            'short' => true
                         ],[
-                            "title" =>  "Priority",
-                            "value" => $issue->presenter()->priority,
-                            "short" => true
+                            'title' => 'Priority',
+                            'value' => $issue->presenter()->priority,
+                            'short' => true
                         ], [
-                            "title" =>  "Type",
-                            "value" => $issue->presenter()->type,
-                            "short" => true
+                            'title' => 'Type',
+                            'value' => $issue->presenter()->type,
+                            'short' => true
                         ],
                     ]
                 ]

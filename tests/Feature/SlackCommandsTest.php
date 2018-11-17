@@ -47,6 +47,7 @@ class SlackCommandsTest extends TestCase
     /** @test */
     public function repository_is_needed_to_create_an_issue()
     {
+        $this->withoutExceptionHandling();
         factory(Repository::class)->create(['name' => 'xef-back']);
         $response = $this->post('slack', ['text' => 'non-existing-repo hello baby']);
 
@@ -64,8 +65,25 @@ class SlackCommandsTest extends TestCase
         $response->assertStatus(200);
         $this->assertEquals(1, Issue::count());
         tap (Issue::first(), function($issue){
-            $this->assertCoun(2, $issue->tags);
+            $this->assertCount(2, $issue->tags);
             $this->assertEquals("tag1,tag2", $issue->tagsString());
+        });
+    }
+
+    /** @test */
+    public function it_can_set_the_status_if_status_is_in_the_text()
+    {
+        $this->withoutExceptionHandling();
+        factory(Repository::class)->create(['name' => 'xef-back', 'account' => 'revo-pos', 'repo' => 'revo-xef']);
+        $response = $this->post('slack', ['text' => 'xef-back hello open task blocker']);
+
+        $response->assertStatus(200);
+        $this->assertEquals(1, Issue::count());
+        tap (Issue::first(), function($issue){
+            $this->assertEquals('hello', $issue->title);
+            $this->assertEquals(Issue::STATUS_OPEN, $issue->status);
+            $this->assertEquals(Issue::TYPE_TASK, $issue->type);
+            $this->assertEquals(Issue::PRIORITY_BLOCKER, $issue->priority);
         });
     }
 }
