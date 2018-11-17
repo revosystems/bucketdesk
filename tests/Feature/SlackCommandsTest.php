@@ -75,7 +75,7 @@ class SlackCommandsTest extends TestCase
     {
         $this->withoutExceptionHandling();
         factory(Repository::class)->create(['name' => 'xef-back', 'account' => 'revo-pos', 'repo' => 'revo-xef']);
-        $response = $this->post('slack', ['text' => 'xef-back hello open task blocker']);
+        $response = $this->post('slack', ['text' => 'xef-back hello :open :task :blocker']);
 
         $response->assertStatus(200);
         $this->assertEquals(1, Issue::count());

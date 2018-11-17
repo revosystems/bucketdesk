@@ -48,10 +48,10 @@ class SlackCommand extends Model
     public function extractFrom($options, &$text, $default, $replaceString = true)
     {
         $result = collect($options)->first(function ($option) use ($text) {
-            return str_contains($text, $option);
+            return str_contains(":{$text}", $option);
         }, $default);
         if ($replaceString) {
-            $text = trim(str_replace($result, '', $text));
+            $text = trim(str_replace(":{$result}", '', $text));
         }
         return $result;
     }
