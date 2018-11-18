@@ -2,7 +2,7 @@
 
 namespace Tests\Unit;
 
-use App\SlackCommand;
+use App\Services\Slack\SlackCommand;
 use Tests\TestCase;
 
 class SlackCommandTest extends TestCase

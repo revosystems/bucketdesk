@@ -1,7 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Services\Slack;
 
+use App\Issue;
+use App\Repository;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class SlackCommand extends Model
