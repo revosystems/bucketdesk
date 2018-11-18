@@ -92,7 +92,7 @@ class SlackController extends Controller
 
     private function today(SlackCommand $slackCommand, $text)
     {
-        $topIssuesQuery = Issue::open()->orderBy('order', 'asc')->where('date', '<', Carbon::tomorrow());
+        $topIssuesQuery = Issue::workingOn()->orderBy('order', 'asc')->where('date', '<', Carbon::tomorrow());
         return $this->respondIssues($topIssuesQuery, $slackCommand->extractUser($text));
     }
 
