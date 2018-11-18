@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Issue;
 use App\Repository;
 use App\SlackCommand;
 use Illuminate\Support\Facades\Log;
@@ -10,6 +11,9 @@ class SlackController extends Controller
 {
     public function handle()
     {
+        if (starts_with(request('text'), 'today')){
+           return $this->todayIssues();
+        }
         return $this->parseCommand(new SlackCommand, request('text'));
     }
 
@@ -66,6 +70,28 @@ class SlackController extends Controller
                     ]
                 ]
             ]
+        ]);
+    }
+
+    private function todayIssues(SlackCommand $slackCommand)
+    {
+        $user = $slackCommand->extractUser(request('text'));
+        $topIssues = Issue::open()->orderBy('order','asc')->take(5)->get()->map(function($issue){
+            return [
+                'text'   => $issue->title,
+                'fields' => [
+                    [
+                        'value' => $issue->remoteLink(),
+                        'short' => false
+                    ], [
+                        'value' => $issue->username ?? '--',
+                        'short' => false
+                    ]]
+            ];
+        });
+        return response()->json([
+            'text'        => "Here you have today's Issues",
+            'attachments' =>  $topIssues
         ]);
     }
 }

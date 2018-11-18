@@ -27,7 +27,7 @@ class SlackCommandsTest extends TestCase
     public function it_can_create_an_issue_from_slack()
     {
         $this->withoutExceptionHandling();
-        factory(Repository::class)->create(['name' => 'xef-back', 'account' => 'revo-pos', 'repo' => 'revo-xef']);
+        factory(Repository::class)->create(['name' => 'xef-back', 'account' => 'revo-pos', 'repo' => 'revo-back']);
         $response = $this->post('slack', ['text' => 'xef-back hello baby']);
 
         $response->assertStatus(200);

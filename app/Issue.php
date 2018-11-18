@@ -176,4 +176,14 @@ class Issue extends Model
         }
         return $this->presenter;
     }
+
+    public function scopeWorkingOn($query)
+    {
+        return $query->whereIn('status', [static::STATUS_NEW, static::STATUS_OPEN, static::STATUS_HOLD]);
+    }
+
+    public function scopeOpen($query)
+    {
+        return $query->where('status', Issue::STATUS_OPEN);
+    }
 }
