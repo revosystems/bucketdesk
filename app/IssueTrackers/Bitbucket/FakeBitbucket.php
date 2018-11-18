@@ -15,6 +15,9 @@ class FakeBitbucket
             'state'    => $extra['status'] ?? 'new',
             'priority' => $extra['priority'] ?? 'major',
             'kind'     => $extra['kind'] ?? 'bug',
+            'assignee' => [
+                'username' => $extra['responsible'] ?? null
+            ]
         ];
     }
 }
