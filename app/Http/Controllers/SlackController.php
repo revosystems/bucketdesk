@@ -5,21 +5,26 @@ namespace App\Http\Controllers;
 use App\Issue;
 use App\Repository;
 use App\SlackCommand;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class SlackController extends Controller
 {
     public function handle()
     {
-        if (starts_with(request('text'), 'today')){
-           return $this->todayIssues();
+        $text = request('text');
+        Log::info("Slack command received with text: {$text}");
+        if (starts_with($text, 'work')) {
+            return $this->currentWork(new SlackCommand, $text);
         }
-        return $this->parseCommand(new SlackCommand, request('text'));
+        if (starts_with($text, 'today')) {
+            return $this->today(new SlackCommand, $text);
+        }
+        return $this->parseCommand(new SlackCommand, $text);
     }
 
     private function parseCommand(SlackCommand $slackCommand, $text)
     {
-        Log::info("Slack command received with text: {$text}");
         $repository = $slackCommand->extractRepository($text);
 
         if (! $repository instanceof Repository) {
@@ -79,10 +84,24 @@ class SlackController extends Controller
         ]);
     }
 
-    private function todayIssues(SlackCommand $slackCommand)
+    private function currentWork(SlackCommand $slackCommand, $text)
     {
-        $user = $slackCommand->extractUser(request('text'));
-        $topIssues = Issue::open()->orderBy('order','asc')->take(5)->get()->map(function($issue){
+        $topIssuesQuery = Issue::open()->orderBy('order', 'asc')->take(5);
+        return $this->respondIssues($topIssuesQuery, $slackCommand->extractUser($text));
+    }
+
+    private function today(SlackCommand $slackCommand, $text)
+    {
+        $topIssuesQuery = Issue::open()->orderBy('order', 'asc')->where('date', '<', Carbon::tomorrow());
+        return $this->respondIssues($topIssuesQuery, $slackCommand->extractUser($text));
+    }
+
+    private function respondIssues($query, $user)
+    {
+        if ($user) {
+            $query->where('username', $user->username);
+        }
+        $topIssues = $query->get()->map(function ($issue) {
             return [
                 'text'   => $issue->title,
                 'fields' => [
@@ -96,8 +115,8 @@ class SlackController extends Controller
             ];
         });
         return response()->json([
-            'text'        => "Here you have today's Issues",
-            'attachments' =>  $topIssues
+            'text'        => $user ? "Here you have *{$user->name}* issues" : "Here you have today's Issues",
+            'attachments' => $topIssues
         ]);
     }
 }
