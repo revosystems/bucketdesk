@@ -61,7 +61,9 @@ class Issue extends Model
 
     public function update(array $attributes = [], array $options = [])
     {
-        $this->syncTags($attributes['tags'] ?? null);
+        if (array_has($attributes, 'tags')) {
+            $this->syncTags($attributes['tags']);
+        }
         return tap(parent::update(array_except($attributes, 'tags'), $options), function () {
             if ($this->shouldIgnoreBitbucketUpdate) return;
             $this->updateBitbucketIssue();
