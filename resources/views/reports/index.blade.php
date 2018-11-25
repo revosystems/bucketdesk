@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
-    <div class="panel fullWidth">
-        <div style="height:200px; max-width: 99%">
+    <div class="mt4">
+        <div style="height:300px">
             <canvas id="myChart" width="1000"></canvas>
         </div>
     </div>
@@ -24,19 +24,22 @@
                     label: 'New',
                     data: @json($new),
                     backgroundColor: [
-                        'green',
+                        '#F6FAFD',
                     ],
-                    borderWidth: 1
+                    borderColor: [
+                        '#66A1DB',
+                    ],
+                    borderWidth: 2
                 },{
                     label: 'Fixed',
                     data: @json($fixed),
                     backgroundColor: [
-                        'red',
+                        '#EEEEEE',
                     ],
                     borderColor: [
-                        'transparent',
+                        '#AAAAAA',
                     ],
-                    borderWidth: 1
+                    borderWidth: 2
                 }]
             },
             options: {
@@ -47,7 +50,7 @@
                         tension: 0, // disables bezier curves
                     },
                     point: {
-                        radius:0
+                        radius:2
                     }
                 },
                 scales: {
