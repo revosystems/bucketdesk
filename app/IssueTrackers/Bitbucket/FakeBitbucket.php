@@ -20,4 +20,9 @@ class FakeBitbucket
             ]
         ];
     }
+
+    public function updateIssue($account, $repoSlug, $id, $fields)
+    {
+
+    }
 }

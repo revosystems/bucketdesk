@@ -3,6 +3,7 @@
 namespace App;
 
 use App\IssueTrackers\Bitbucket\Bitbucket;
+use App\Observers\IssueObserver;
 use Illuminate\Database\Eloquent\Model;
 
 class Issue extends Model
@@ -83,22 +84,22 @@ class Issue extends Model
 
     public function comment($comment)
     {
-        return (new Bitbucket)->createComment($this->repository->account, $this->repository->repo, $this->issue_id, $comment);
+        return app(Bitbucket::class)->createComment($this->repository->account, $this->repository->repo, $this->issue_id, $comment);
     }
 
     public function updateBitbucketWith($array)
     {
-        return (new Bitbucket)->updateIssue($this->repository->account, $this->repository->repo, $this->issue_id, $array);
+        return app(Bitbucket::class)->updateIssue($this->repository->account, $this->repository->repo, $this->issue_id, $array);
     }
 
     public function getRemote()
     {
-        return (new Bitbucket)->getIssue($this->repository->account, $this->repository->repo, $this->issue_id);
+        return app(Bitbucket::class)->getIssue($this->repository->account, $this->repository->repo, $this->issue_id);
     }
 
     public function getComments()
     {
-        return (new Bitbucket)->getIssueComments($this->repository->account, $this->repository->repo, $this->issue_id);
+        return app(Bitbucket::class)->getIssueComments($this->repository->account, $this->repository->repo, $this->issue_id);
     }
 
     public function remoteLink()
