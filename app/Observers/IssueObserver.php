@@ -24,7 +24,7 @@ class IssueObserver
      */
     public function updated(Issue $issue)
     {
-        if ($issue->status != Issue::STATUS_RESOLVED || $issue->getOriginal['status'] == Issue::STATUS_RESOLVED) {
+        if ($issue->status != Issue::STATUS_RESOLVED || $issue->getOriginal()['status'] == Issue::STATUS_RESOLVED) {
             return;
         }
         IssueKpi::firstOrCreate([

@@ -65,4 +65,13 @@ class KpiTest extends TestCase
         });
     }
 
+    /** @test */
+    public function a_simple_update_does_not_increment_resolved_kpi()
+    {
+        $issues = factory(Issue::class, 4)->create(["status" => Issue::STATUS_RESOLVED]);
+        $issues[1]->update(['status' => Issue::STATUS_OPEN]);
+        $issues[2]->update(['status' => Issue::STATUS_RESOLVED]);
+        $this->assertEquals(1, IssueKpi::count());  //1 for new and 1 for resolved
+    }
+
 }
