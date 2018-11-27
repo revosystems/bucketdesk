@@ -12,7 +12,7 @@ class IssueObserver
     {
         IssueKpi::firstOrCreate([
             'type' => IssueKpi::NEW,
-            'date' => Carbon::now()
+            'date' => Carbon::now()->toDateString()
         ])->increment('value');
     }
 
@@ -29,7 +29,7 @@ class IssueObserver
         }
         IssueKpi::firstOrCreate([
             'type'     => IssueKpi::RESOLVED,
-            'date'     => Carbon::now(),
+            'date'     => Carbon::now()->toDateString(),
             'username' => $issue->username,
         ])->increment('value');
     }

@@ -24,7 +24,7 @@
                     label: 'New',
                     data: @json($new),
                     backgroundColor: [
-                        '#F6FAFD',
+                        'rgba(104, 162, 217, 0.20)',
                     ],
                     borderColor: [
                         '#66A1DB',
@@ -34,7 +34,7 @@
                     label: 'Fixed',
                     data: @json($fixed),
                     backgroundColor: [
-                        '#EEEEEE',
+                        'RGBA(170, 170, 170, 0.20)',
                     ],
                     borderColor: [
                         '#AAAAAA',
