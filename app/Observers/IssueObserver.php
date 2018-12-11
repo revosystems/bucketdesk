@@ -10,6 +10,8 @@ class IssueObserver
 {
     public function created(Issue $issue)
     {
+        if ($issue->status >= Issue::STATUS_CLOSED) return;
+
         IssueKpi::firstOrCreate([
             'type' => IssueKpi::NEW,
             'date' => Carbon::now()->toDateString()
