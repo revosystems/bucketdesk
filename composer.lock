@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b749f6fb49068dd360e0ceb4feb5c84",
+    "content-hash": "11443798cf27957b1be2a782405aa78d",
     "packages": [
         {
             "name": "badchoice/hurricane",
@@ -36,16 +36,16 @@
         },
         {
             "name": "badchoice/thrust",
-            "version": "0.3.12",
+            "version": "0.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/BadChoice/thrust.git",
-                "reference": "c54519265a643d410aa5ffba70bd0fd022d10076"
+                "reference": "268097e19c61ba43bbd07066a2b7a8615e991ced"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/BadChoice/thrust/zipball/c54519265a643d410aa5ffba70bd0fd022d10076",
-                "reference": "c54519265a643d410aa5ffba70bd0fd022d10076",
+                "url": "https://api.github.com/repos/BadChoice/thrust/zipball/268097e19c61ba43bbd07066a2b7a8615e991ced",
+                "reference": "268097e19c61ba43bbd07066a2b7a8615e991ced",
                 "shasum": ""
             },
             "require": {
@@ -79,7 +79,7 @@
                 }
             ],
             "description": "A simple resource crud generator",
-            "time": "2018-11-15T17:12:23+00:00"
+            "time": "2019-04-09T16:47:51+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",

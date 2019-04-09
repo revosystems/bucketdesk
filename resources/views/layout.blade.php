@@ -20,6 +20,7 @@
         <script src="{{ asset('js/app.js') }}"></script>
         @yield('scripts')
         @stack('innerScripts')
+        @stack('edit-scripts')
     </body>
 
 </html>

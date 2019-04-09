@@ -4,6 +4,9 @@
         <div style="height:300px">
             <canvas id="myChart" width="1000"></canvas>
         </div>
+        <div class="grid">
+            @each('thrust::metrics.panel', $metrics, 'metric')
+        </div>
     </div>
 @stop
 
