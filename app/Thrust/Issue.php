@@ -42,7 +42,7 @@ class Issue extends Resource
             TypeField::make('type')->sortable()->options(array_flip(\App\Issue::types())),
             Select::make('status')->sortable()->options(array_flip(\App\Issue::statuses())),
             Date::make('date')->sortable()->rowClass('date'),
-//            Date::make('created_at')->sortable()->onlyInIndex(),
+            Date::make('created_at')->sortable()->onlyInIndex(),
 
             ResolveField::make('id',''),
         ];
