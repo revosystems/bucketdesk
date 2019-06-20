@@ -24,14 +24,14 @@ class WebhookController extends Controller
             'title'    => request('issue')['title'],
             'type'     => Issue::parseType(request('issue')['kind']),
             'priority' => Issue::parsePriority(request('issue')['priority']),
-            'username' => request('issue')['assignee']['username'] ?? null,
+            'username' => request('issue')['assignee']['nickname'] ?? null,
             'status'   => Issue::parseStatus(request('issue')['state']),
         ]);
     }
 
     private function findRepository()
     {
-        $account    = request('repository')['owner']['username'];
+        $account    = request('repository')['owner']['nickname'];
         $repo       = request('repository')['name'];
         return Repository::where(['account' => $account, 'repo' => $repo])->first();
     }

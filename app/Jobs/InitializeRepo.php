@@ -65,7 +65,7 @@ class InitializeRepo implements ShouldQueue
         $developers = collect($groups)->firstWhere('name', config('services.bitbucket.developersGroup'))->members;
         collect($developers)->each(function ($developer) {
             User::firstOrCreate([
-                'username' => $developer->username
+                'username' => $developer->nickname
             ], [
                 'name'     => $developer->display_name,
                 'password' => bcrypt(str_random(8)),
